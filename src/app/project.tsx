@@ -9,7 +9,13 @@ const Project = () => {
       "Constantly exploring new technologies and build on my existing knowledge base",
   };
 
-  const projects = [
+  const projects: {
+    title: string;
+    description: string;
+    imageUrl: string;
+    badges: string[];
+    website: string;
+  }[] = [
     {
       title: "On The Move",
       description: "Personalized Workout Generator and Tracker",
@@ -39,9 +45,12 @@ const Project = () => {
       <SectionHeader sectionDetails={sectionDetails}></SectionHeader>
       <div className="w-full flex flex-col sm:flex-row justify-center gap-8">
         {projects.map((project, index) => (
-          <div key={index} className=" ">
-            <ProjectCarousel projectDetails={project}> </ProjectCarousel>
-          </div>
+          // <div className=" ">
+          <ProjectCarousel
+            key={index}
+            projectDetails={project}
+          ></ProjectCarousel>
+          // </div>
         ))}
       </div>
     </div>

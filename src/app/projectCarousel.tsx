@@ -1,7 +1,15 @@
 import Image from "next/image";
 import React from "react";
 
-const ProjectCarousel = (props) => {
+const ProjectCarousel = (props: {
+  projectDetails: {
+    title: string;
+    description: string;
+    imageUrl: string;
+    badges: string[];
+    website: string;
+  };
+}) => {
   return (
     <div className=" flex flex-col gap-4 w-80 sm:w-100  bg-[#e6ebf5] rounded-2xl p-2 min-h-[500px] ">
       <div className="flex justify-center border-2 rounded-2xl w-full">
