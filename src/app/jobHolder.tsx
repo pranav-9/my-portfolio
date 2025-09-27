@@ -2,7 +2,14 @@ import { Octagon } from "lucide-react";
 import Image from "next/image";
 import React from "react";
 
-const JobHolder = (props) => {
+const JobHolder = (props: {
+  jobDetails: {
+    role: string;
+    company: string;
+    frontend: boolean;
+    backend: boolean;
+  };
+}) => {
   return (
     <div
       //   key={job.year + index}
@@ -43,8 +50,7 @@ const JobHolder = (props) => {
             </div>
 
             {/* Conditionally render badges if at least one badge text is not empty */}
-            {(props.jobDetails.badges[0].text !== "" ||
-              props.jobDetails.badges[1].text !== "") && (
+            {
               <div className="flex justify-center gap-0.5">
                 {props.jobDetails.role !== "" && (
                   <div className="flex gap-0.5">
@@ -65,7 +71,7 @@ const JobHolder = (props) => {
                   </div>
                 )}
               </div>
-            )}
+            }
           </div>
         )}
       </div>

@@ -1,7 +1,17 @@
 import React from "react";
 import Skillbox from "./skillbox";
 
-const SkillDomain = (props) => {
+const SkillDomain = (props: {
+  domainDetails: {
+    title: string;
+    work: {
+      text: string;
+      color: string;
+      badges: string[];
+      skillLevel: number;
+    }[];
+  };
+}) => {
   return (
     <div className="flex flex-col justify-center gap-4  ">
       <p className="text-2xl sm:text-4xl font-bold text-[#355794] font-heavy">

@@ -1,7 +1,14 @@
 import Image from "next/image";
 import React from "react";
 
-const Skillbox = (props) => {
+const Skillbox = (props: {
+  skillDetails: {
+    text: string;
+    color: string;
+    badges: string[];
+    skillLevel: number;
+  };
+}) => {
   const skillLevel = props.skillDetails.skillLevel;
   const progressClass =
     skillLevel >= 70

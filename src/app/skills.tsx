@@ -13,7 +13,16 @@ const Skills = () => {
       "My Circle of Competence represents a wide breadth combined with specific depth",
   };
 
-  const skills = [
+  const skills: {
+    id: number;
+    title: string;
+    work: {
+      text: string;
+      color: string;
+      badges: string[];
+      skillLevel: number;
+    }[];
+  }[] = [
     {
       id: 1,
       title: "Backend Work",
