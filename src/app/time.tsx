@@ -12,7 +12,14 @@ const TimeLine = () => {
     subtitle: "7 years of workex across varied organizations and roles",
   };
 
-  const jobExperiences = [
+  const jobExperiences: {
+    role: string;
+    company: string;
+    year: string;
+    frontend: boolean;
+    backend: boolean;
+    companyImage: string;
+  }[] = [
     {
       year: "2018",
       role: "Dashboard Developer",
@@ -20,10 +27,6 @@ const TimeLine = () => {
       companyImage: "/citi.png",
       frontend: true,
       backend: false,
-      badges: [
-        { text: "Frontend", color: "badge-primary" },
-        { text: "AngularJS", color: "badge-success" },
-      ],
     },
     {
       year: "2019",
@@ -32,10 +35,6 @@ const TimeLine = () => {
       companyImage: "/citi.png",
       frontend: false,
       backend: true,
-      badges: [
-        { text: "Backend", color: "badge-primary" },
-        { text: "Java", color: "badge-success" },
-      ],
     },
     // {
     //   year: "2020",
@@ -53,10 +52,6 @@ const TimeLine = () => {
       companyImage: "/toptal.png",
       frontend: false,
       backend: true,
-      badges: [
-        { text: "Backend", color: "badge-primary" },
-        { text: "Node.js", color: "badge-success" },
-      ],
     },
     {
       year: "2022",
@@ -65,10 +60,6 @@ const TimeLine = () => {
       companyImage: "/xendit-2.png",
       frontend: false,
       backend: true,
-      badges: [
-        { text: "Backend", color: "badge-primary" },
-        { text: "Node.js", color: "badge-success" },
-      ],
     },
     {
       year: "2023",
@@ -77,10 +68,6 @@ const TimeLine = () => {
       companyImage: "/otm-logo.png",
       frontend: true,
       backend: true,
-      badges: [
-        { text: "Full Stack", color: "badge-primary" },
-        { text: "Node.js", color: "badge-success" },
-      ],
     },
     // {
     //   year: "2024",
@@ -97,10 +84,6 @@ const TimeLine = () => {
       companyImage: "/toptal.png",
       frontend: true,
       backend: true,
-      badges: [
-        { text: "Full Stack", color: "badge-primary" },
-        { text: "Node.js", color: "badge-success" },
-      ],
     },
     // Add more job experiences as needed
   ];

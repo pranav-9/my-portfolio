@@ -6,8 +6,10 @@ const JobHolder = (props: {
   jobDetails: {
     role: string;
     company: string;
+    year: string;
     frontend: boolean;
     backend: boolean;
+    companyImage: string;
   };
 }) => {
   return (
