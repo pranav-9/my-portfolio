@@ -83,8 +83,8 @@ const Skills = () => {
 
       {/* <div className="flex justify-center gap-4 justify-items-center"> */}
       <div className="flex justify-center flex-col gap-8 ">
-        {skills.map((i) => (
-          <SkillDomain domainDetails={i}></SkillDomain>
+        {skills.map((i, index) => (
+          <SkillDomain key={index} domainDetails={i}></SkillDomain>
         ))}
       </div>
       {/* </div> */}

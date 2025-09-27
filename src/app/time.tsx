@@ -111,7 +111,7 @@ const TimeLine = () => {
 
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-0 sm:mr-[12%] sm:ml-[12%]">
         {jobExperiences.map((job, index) => (
-          <JobHolder jobDetails={job}></JobHolder>
+          <JobHolder key={index} jobDetails={job}></JobHolder>
         ))}
       </div>
 

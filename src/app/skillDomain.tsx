@@ -8,8 +8,8 @@ const SkillDomain = (props) => {
         {props.domainDetails.title}
       </p>
       <div className="grid grid-cols-1 xl:grid-cols-3 2xl:grid-cols-4 p-2 sm:p-8 gap-4  bg-[#e6ebf5] rounded-2xl">
-        {props.domainDetails.work.map((s) => (
-          <div key={s}>
+        {props.domainDetails.work.map((s, index) => (
+          <div key={index}>
             <Skillbox skillDetails={s}></Skillbox>
           </div>
         ))}
