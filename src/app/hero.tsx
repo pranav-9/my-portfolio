@@ -38,9 +38,9 @@ const Hero = () => {
               from India
             </p>
           </div>
-          <p className="text-2xl font-serif">
+          {/* <p className="text-2xl font-serif">
             Software Engineer | 0-1 Development
-          </p>
+          </p> */}
         </div>
       </div>
     </div>

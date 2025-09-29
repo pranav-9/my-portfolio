@@ -30,13 +30,13 @@ const Skillbox = (props: {
           {props.skillDetails.badges.map((badge) => (
             <div key={badge} className="flex gap-2">
               <div className={`badge badge-soft p-2  badge-info`}>
-                <Image
+                {/* <Image
                   src="/nodejs.png"
                   alt="Logo"
                   width={20}
                   height={20}
                   className=""
-                />
+                /> */}
                 {badge}
               </div>
             </div>
