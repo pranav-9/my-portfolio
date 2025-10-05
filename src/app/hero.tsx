@@ -11,9 +11,11 @@ const Hero = () => {
 
         <div className=" border-10 border-white h-fit rounded-2xl">
           <Image
-            src="/pai.jpeg"
+            src="/pai-2.jpg"
+            // "/pai.jpeg"
+
             alt="Logo"
-            width={500}
+            width={400}
             height={20}
             className="rounded-2xl"
           />
@@ -26,13 +28,13 @@ const Hero = () => {
 
           <div className="flex flex-col gap-0 font-mono text-xl/12 sm:text-4xl/22">
             <p className="  0">
-              <span className="bg-linear-to-r from-[#355794] to-[#708ec8] p-2 sm:p-4  text-white rounded-md font-bold">
-                Full stack developer
+              <span className="bg-linear-to-r from-[#61605e] to-[#b1afa9] p-2 sm:p-4  text-white rounded-md font-bold">
+                Full Stack Developer
               </span>{" "}
               with a
             </p>
             <p className=" 0">
-              <span className="bg-linear-to-r from-[#355794] to-[#708ec8] p-2 sm:p-4 text-white rounded-md font-bold">
+              <span className="bg-linear-to-r from-[#61605e] to-[#b1afa9] p-2 sm:p-4 text-white rounded-md font-bold">
                 Product Mindset
               </span>{" "}
               from India
