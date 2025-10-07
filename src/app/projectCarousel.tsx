@@ -11,7 +11,7 @@ const ProjectCarousel = (props: {
   };
 }) => {
   return (
-    <div className=" flex flex-col gap-4 w-80 sm:w-100  bg-[#e6ebf5] rounded-2xl p-2 min-h-[500px] ">
+    <div className=" flex flex-col gap-4 w-80 sm:w-100  bg-gray-200 rounded-2xl  min-h-[500px] ">
       <div className="flex justify-center border-2 rounded-2xl w-full">
         <Image
           src={props.projectDetails.imageUrl}
@@ -29,7 +29,7 @@ const ProjectCarousel = (props: {
         {props.projectDetails.badges && (
           <div className="flex gap-2">
             {props.projectDetails.badges.map((badge, index) => (
-              <div key={index} className="badge badge-soft badge-info p-2">
+              <div key={index} className="badge  badge-neutral  p-2">
                 {badge}
               </div>
             ))}
