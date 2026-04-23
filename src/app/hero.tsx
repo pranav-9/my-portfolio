@@ -12,19 +12,19 @@ const Hero = () => {
         <Reveal className="flex flex-1 flex-col gap-8">
           <span className="kicker">
             <span className="kicker-dot" />
-            Full Stack Engineer · Bengaluru, India
+            AI · Automation · Integrations · 9 yrs · 4 yrs Toptal
           </span>
           <h1 className="text-5xl sm:text-7xl font-semibold tracking-tight text-brand-ink leading-[1.02]">
             Pranav Yadav
           </h1>
           <p className="max-w-xl text-xl sm:text-2xl text-brand-muted leading-relaxed">
             I ship products end-to-end — from{" "}
-            <span className="text-brand-ink font-medium">API architecture</span>{" "}
+            <span className="text-brand-ink font-medium">LLM pipelines</span>{" "}
             to{" "}
             <span className="text-brand-ink font-medium">
               pixel-tight frontends
             </span>
-            . 7+ years across fintech, consumer, and 0-to-1 startups.
+            . 9 years across fintech, insurance, and AI; ex-CTO; 4 on Toptal.
           </p>
 
           <div className="flex flex-wrap items-center gap-3 pt-2">
@@ -49,6 +49,16 @@ const Hero = () => {
 
           <div className="flex items-center gap-5 pt-4 text-brand-muted">
             <a
+              href="https://talent.toptal.com/resume/developers/pranav-yadav"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Toptal profile"
+              className="inline-flex items-center gap-2 rounded-full border border-brand-ink/15 bg-white px-3 py-1.5 text-xs font-medium text-brand-ink transition hover:border-brand-ink hover:shadow-[0_8px_20px_-10px_rgba(53,87,148,0.4)]"
+            >
+              <span className="h-1.5 w-1.5 rounded-full bg-brand-accent" />
+              Top 3% · Toptal Network · 4 yrs
+            </a>
+            <a
               href="https://www.linkedin.com/in/pranav-yadav-375247b6/"
               target="_blank"
               rel="noopener noreferrer"
@@ -58,16 +68,7 @@ const Hero = () => {
               <Linkedin size={20} />
             </a>
             <a
-              href="https://talent.toptal.com/resume/developers/pranav-yadav"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Toptal resume"
-              className="text-sm font-mono uppercase tracking-wider transition hover:text-brand-ink"
-            >
-              Toptal
-            </a>
-            <a
-              href="https://github.com/"
+              href="https://github.com/pranav-9"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="GitHub"

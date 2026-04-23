@@ -24,12 +24,13 @@ const Project = () => {
   const projects: ProjectDetails[] = [
     {
       title: "On The Move",
-      role: "CTO · 0-to-1",
+      role: "CTO · Founding engineer · 6-10 reports",
       description:
-        "Personalized workout generator and tracker for coaches and trainees. Built the full platform — architecture, APIs, app, infra.",
-      impact: "Live platform serving daily active coach-trainee pairs.",
+        "B2C fitness SaaS delivering personalized plans through an LLM-driven coach-trainee loop. Took the product from a Webflow MVP to a fully integrated platform — architecture, APIs, mobile-first web app, and infra.",
+      impact:
+        "0 to live platform with daily active coach-trainee pairs; LLM integration shipped pre-ChatGPT-mass-adoption (2023).",
       imageUrl: "/otm-app.png",
-      stack: ["Next.js", "Node.js", "MongoDB", "AWS"],
+      stack: ["Next.js", "Node.js", "MongoDB", "AWS", "OpenAI"],
       website: "https://platform.onthemove.life/home",
     },
     {
@@ -43,14 +44,15 @@ const Project = () => {
       website: "https://concall-alpha.vercel.app/",
     },
     {
-      title: "OTM Marketing Site",
-      role: "Design + build",
+      title: "Easy Leads AI",
+      role: "Backend architect",
       description:
-        "SEO-optimized marketing site for the On The Move platform — custom CMS-driven pages with careful attention to Core Web Vitals.",
-      impact: "Primary acquisition surface for the product.",
-      imageUrl: "/otm-seo.png",
-      stack: ["Webflow", "SEO", "CMS"],
-      website: "https://www.onthemove.life",
+        "WhatsApp-native lead qualification engine. Dynamically qualifies inbound leads, adapts to their behavior, routes them to a human when ready, and auto-generates a sales script for the handoff.",
+      impact:
+        "Replaces the SDR top-of-funnel for high-conversion businesses — qualification, nurture, and routing in one pipeline.",
+      imageUrl: "/nodejs.png",
+      stack: ["NestJS", "OpenAI", "WhatsApp Business API", "Botpress", "Webhooks"],
+      website: "#",
     },
   ];
 

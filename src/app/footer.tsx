@@ -51,7 +51,7 @@ const Footer = () => {
 
         <div className="mt-24 flex flex-col items-start justify-between gap-4 border-t border-brand-divider pt-8 text-sm text-brand-muted sm:flex-row sm:items-center">
           <p className="font-mono text-xs uppercase tracking-wider">
-            © {new Date().getFullYear()} Pranav Yadav
+            © {new Date().getFullYear()} Pranav Yadav · New Delhi · BTech CS, DTU &rsquo;18
           </p>
           <p className="font-mono text-xs uppercase tracking-wider">
             Built with Next.js · Tailwind · shipped on Vercel

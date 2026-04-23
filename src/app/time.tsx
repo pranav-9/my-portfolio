@@ -13,13 +13,31 @@ const TimeLine = () => {
 
   const jobExperiences: JobDetails[] = [
     {
-      duration: "2018 — 2020",
-      role: "Software Engineer",
+      duration: "2018 — 2019",
+      role: "Front-end Developer",
       company: "Citibank",
       companyImage: "/citi.png",
       summary:
-        "Built internal dashboards and SpringBoot services powering institutional workflows.",
-      tags: ["Java", "SpringBoot", "Dashboards"],
+        "Built an Angular client app from scratch to production — multiple AG Grid data tables, auth, and session management.",
+      tags: ["Angular", "TypeScript", "Front-end"],
+    },
+    {
+      duration: "2019 — 2021",
+      role: "Java Developer",
+      company: "Citibank",
+      companyImage: "/citi.png",
+      summary:
+        "Owned business logic and CI/CD; pipeline improvements saved ~1 hour of dev effort per day.",
+      tags: ["Java", "CI/CD", "Back-end"],
+    },
+    {
+      duration: "2020 — 2021",
+      role: "JavaScript Back-end Lead",
+      company: "Nuclei Sports",
+      companyImage: "/globe.svg",
+      summary:
+        "Designed a microservices architecture (Node.js, Express, Loopback) and built a proprietary player-performance algorithm. 1-5 reports.",
+      tags: ["Node.js", "Microservices", "Leadership"],
     },
     {
       duration: "2021",
@@ -27,35 +45,62 @@ const TimeLine = () => {
       company: "Spark · via Toptal",
       companyImage: "/toptal.png",
       summary:
-        "Backend integrations and service work for a UK edtech publisher through Toptal.",
-      tags: ["Node.js", "Integrations"],
+        "Third-party integrations (ClickUp, Airtable), webhooks, and RabbitMQ for a UK edtech publisher.",
+      tags: ["Node.js", "Integrations", "RabbitMQ"],
     },
     {
       duration: "2022",
       role: "Senior Node.js Developer",
-      company: "Xendit",
+      company: "Xendit · via Toptal",
       companyImage: "/xendit-2.png",
       summary:
-        "Payments infrastructure — high-throughput APIs for one of SEA's largest payment gateways.",
-      tags: ["Node.js", "Payments", "Scale"],
+        "Built a lean billing/revenue system on a transactional dataset for SEA's largest payment gateway.",
+      tags: ["Node.js", "Payments", "Kubernetes"],
     },
     {
-      duration: "2023 — 2024",
-      role: "Chief Technology Officer",
+      duration: "2022 — 2024",
+      role: "CTO · Founding engineer",
       company: "On The Move",
       companyImage: "/otm-logo.png",
       summary:
-        "Founded and led engineering. Shipped platform, app, and marketing site end-to-end.",
-      tags: ["Full stack", "0-to-1", "Leadership"],
+        "Founded and led engineering for an AI-powered fitness SaaS. 6-10 reports. Took the product from a Webflow MVP to a fully integrated platform.",
+      tags: ["Full stack", "Leadership", "LLMs"],
+    },
+    {
+      duration: "2025",
+      role: "Automation Consultant",
+      company: "Journey Entertainment · via Toptal",
+      companyImage: "/toptal.png",
+      summary:
+        "Automated payment-request approvals and built a JotForm → Airtable pipeline plus a relational DB for crew, cast, and project management.",
+      tags: ["Airtable", "Automation", "Zapier"],
     },
     {
       duration: "2025 — now",
-      role: "Automation Consultant",
-      company: "Journey Entertainment",
+      role: "Senior Full-Stack Engineer · AI & Automation",
+      company: "Risk Management & Compliance · via Toptal",
       companyImage: "/toptal.png",
       summary:
-        "Automation and AI-powered tooling for creative and operational workflows.",
-      tags: ["Automation", "GenAI", "Full stack"],
+        "Provider-pluggable LLM pipeline (OpenAI + Gemini) generating underwriter-grade Letters of Experience. Zoho CRM sync with concurrent attachment streaming, GCS uploads, and NHTSA VIN verification.",
+      tags: ["Next.js", "Supabase", "LLMs", "Zoho"],
+    },
+    {
+      duration: "2025 — now",
+      role: "Senior Full-Stack Developer · Webflow + Next.js",
+      company: "Very Big Things · via Toptal",
+      companyImage: "/toptal.png",
+      summary:
+        "Webflow → Next.js 15 migration of a vacation booking platform; edge-native on Cloudflare Workers via OpenNext. KV-backed cache fans out to 6 Webflow collections in parallel and serves a pre-joined dataset globally.",
+      tags: ["Next.js", "Cloudflare", "Webflow"],
+    },
+    {
+      duration: "2026",
+      role: "Webflow Developer",
+      company: "Rox Radar · via Toptal",
+      companyImage: "/toptal.png",
+      summary:
+        "Stabilized a Webflow + Airtable + Mapbox event platform; refactored interactive components and cut bug turnaround.",
+      tags: ["Webflow", "Mapbox", "Airtable"],
     },
   ];
 
