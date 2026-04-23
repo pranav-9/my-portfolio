@@ -217,6 +217,7 @@ type DiagnosticItem = {
   title: string;
   desc: string;
   critical?: boolean;
+  pills?: string[];
 };
 
 type Quadrant = {
@@ -230,12 +231,18 @@ const quadrants: Quadrant[] = [
   {
     color: "measure",
     heading: "Measure",
-    question: "Do we know how we're doing?",
+    question: "How is the system performing overall?",
     items: [
       {
         title: "Eval harness",
         critical: true,
         desc: "Golden conversations covering happy paths and known edge cases; runs on every prompt or retrieval change; blocks regressions before rollout.",
+        pills: [
+          "Golden dataset",
+          "LLM-as-judge",
+          "Tool-call evals",
+          "Task-completion rate",
+        ],
       },
       {
         title: "Cost & latency budgets",
@@ -248,34 +255,19 @@ const quadrants: Quadrant[] = [
     ],
   },
   {
-    color: "understand",
-    heading: "Understand",
-    question: "What is actually happening in production?",
-    items: [
-      {
-        title: "Conversation tracing",
-        critical: true,
-        desc: "End-to-end turn traces (prompt, retrieved chunks, tool calls, completion) searchable by session; Langfuse / Application Insights / equivalent.",
-      },
-      {
-        title: "Failure-mode clustering",
-        desc: "Weekly review of top failure categories — hallucinations, wrong tool choice, broken slot-filling, escalation misses.",
-      },
-      {
-        title: "Intent coverage map",
-        desc: "Top-20 real user intents cross-tabbed against how well the bot handles each.",
-      },
-    ],
-  },
-  {
     color: "core",
     heading: "Core system quality",
-    question: "Is the brain working well?",
+    question: "How good is each component?",
     items: [
       {
         title: "RAG retrieval quality",
         critical: true,
         desc: "Precision & recall measured on golden queries; chunk-level eval; adversarial noise injection; separate scores for retrieval vs generation.",
+        pills: [
+          "Precision & recall",
+          "Chunk-level eval",
+          "Adversarial noise",
+        ],
       },
       {
         title: "Structured output discipline",
@@ -300,6 +292,12 @@ const quadrants: Quadrant[] = [
         title: "Guardrails coverage",
         critical: true,
         desc: "Jailbreak resistance, PII leakage prevention, out-of-scope deflection, brand-safety filters — each tested against a named adversarial suite.",
+        pills: [
+          "Jailbreak suite",
+          "PII leakage",
+          "Out-of-scope deflection",
+          "Brand safety",
+        ],
       },
       {
         title: "Propose → confirm → execute",
@@ -312,6 +310,27 @@ const quadrants: Quadrant[] = [
       {
         title: "Red-team & audit log",
         desc: "Scripted adversarial runs before each release; complete audit trail of LLM decisions for post-incident review.",
+      },
+    ],
+  },
+  {
+    color: "understand",
+    heading: "Observe",
+    question: "What is actually happening in production?",
+    items: [
+      {
+        title: "Historical data audit",
+        desc: "Pre-launch review of existing Volvo call-center logs, service-booking history, and chat transcripts (where available) to ground prompt and flow design in real user patterns — not engineer imagination. If the data doesn't exist, that gap is itself an early finding.",
+      },
+      {
+        title: "Conversation analytics dashboard",
+        desc: "Live dashboard scoring each production conversation on completion, quality, and escalation risk; topic clustering surfaces what users actually ask and flags emerging intents before metrics shift.",
+        pills: [
+          "Per-conversation score",
+          "Completion rate",
+          "Topic clustering",
+          "Escalation risk",
+        ],
       },
     ],
   },

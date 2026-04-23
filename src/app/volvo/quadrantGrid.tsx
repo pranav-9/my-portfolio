@@ -9,6 +9,7 @@ type DiagnosticItem = {
   title: string;
   desc: string;
   critical?: boolean;
+  pills?: string[];
 };
 
 type Quadrant = {
@@ -116,6 +117,18 @@ const QuadrantGrid = ({ quadrants, quadStyles }: Props) => {
                         <p className="text-[13px] leading-snug text-brand-muted">
                           {item.desc}
                         </p>
+                        {item.pills && item.pills.length > 0 && (
+                          <div className="flex flex-wrap gap-1 pt-1">
+                            {item.pills.map((p) => (
+                              <span
+                                key={p}
+                                className="badge badge-soft badge-neutral px-1.5 py-0.5 font-mono text-[10px]"
+                              >
+                                {p}
+                              </span>
+                            ))}
+                          </div>
+                        )}
                       </div>
                     </li>
                   ))}
