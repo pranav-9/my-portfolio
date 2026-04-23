@@ -1,81 +1,81 @@
-import { Octagon } from "lucide-react";
 import Image from "next/image";
 import React from "react";
 
-const JobHolder = (props: {
-  jobDetails: {
-    role: string;
-    company: string;
-    year: string;
-    frontend: boolean;
-    backend: boolean;
-    companyImage: string;
-  };
-}) => {
-  return (
-    <div
-      //   key={job.year + index}
-      className="flex flex-col justify-center items-center gap-4 min-h-[250px]
+export type JobDetails = {
+  duration: string;
+  role: string;
+  company: string;
+  companyImage: string;
+  summary: string;
+  tags: string[];
+};
 
-            "
-    >
-      <div className="h-1/4 flex w-full items-center justify-center border-b-2 relative">
-        <div className="text-xl font-extrabold">{props.jobDetails.year}</div>
-        {/* <Octagon size={20} color="#2fb646" absoluteStrokeWidth /> */}
-        <div className="absolute left-1/2 bottom-[-6px]">
-          <Octagon size={10} color="#355794" absoluteStrokeWidth />
+const JobHolder = (props: {
+  jobDetails: JobDetails;
+  align: "left" | "right";
+}) => {
+  const { jobDetails: j, align } = props;
+
+  return (
+    <div className="relative grid grid-cols-[28px_1fr] gap-4 sm:grid-cols-2 sm:gap-12">
+      {/* Timeline dot */}
+      <div
+        className={`relative flex items-center justify-center pt-4 sm:absolute sm:inset-y-0 sm:left-1/2 sm:-translate-x-1/2 ${
+          align === "right" ? "sm:order-2" : ""
+        }`}
+      >
+        <div className="relative z-10 h-6 w-6 rounded-full border-2 border-brand-accent bg-white">
+          <div className="absolute inset-1 rounded-full bg-brand-accent" />
         </div>
       </div>
-      <div className="h-3/4 min-w-[80%] ">
-        {/* Conditionally render role if not empty */}
-        {props.jobDetails.role !== "" && (
-          <div className="flex flex-col text-md min-h-[150px] gap-8  bg-[#e6ebf5]  p-2 m-2 rounded-2xl  text-center  ">
-            <div className="flex gap-2">
-              <div className="w-1/6 flex justify-center items-center">
-                <Image
-                  src={props.jobDetails.companyImage}
-                  alt="Logo"
-                  width={50}
-                  height={20}
-                  className=""
-                />
-              </div>
-              <div className="flex flex-col items-start">
-                {/* <p className="text-[#355794] text-md font-semibold text-start"> */}
-                <p className="font-bold text-lg sm:text-2xl text-start">
-                  {props.jobDetails.role}
-                </p>
-                <p className="text-[#355794] text-md font-bold text-start">
-                  {props.jobDetails.company}
-                </p>
-              </div>
-            </div>
 
-            {/* Conditionally render badges if at least one badge text is not empty */}
-            {
-              <div className="flex justify-center gap-0.5">
-                {props.jobDetails.role !== "" && (
-                  <div className="flex gap-0.5">
-                    <div
-                      className={`btn btn-primary btn-xs btn-soft ${
-                        props.jobDetails.frontend ? "" : "btn-disabled"
-                      }`}
-                    >
-                      Frontend
-                    </div>
-                    <div
-                      className={`btn btn-success btn-xs btn-soft ${
-                        props.jobDetails.backend ? "" : "btn-disabled"
-                      }`}
-                    >
-                      Backend
-                    </div>
-                  </div>
-                )}
-              </div>
-            }
+      {/* Spacer for the opposite column on desktop */}
+      <div
+        className={`hidden sm:block ${
+          align === "right" ? "sm:order-1" : "sm:order-3"
+        }`}
+      />
+
+      {/* Card */}
+      <div
+        className={`flex flex-col gap-4 rounded-2xl border border-brand-divider bg-white p-6 transition hover:-translate-y-0.5 hover:border-brand-ink hover:shadow-[0_20px_50px_-20px_rgba(53,87,148,0.25)] ${
+          align === "right" ? "sm:order-3" : "sm:order-1"
+        }`}
+      >
+        <div className="flex items-center gap-3">
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-lg border border-brand-divider bg-white p-1">
+            <Image
+              src={j.companyImage}
+              alt={`${j.company} logo`}
+              width={32}
+              height={32}
+              className="object-contain"
+            />
           </div>
-        )}
+          <div className="flex flex-col">
+            <p className="text-base font-semibold text-brand-ink sm:text-lg">
+              {j.role}
+            </p>
+            <p className="text-sm font-medium text-brand-accent">{j.company}</p>
+          </div>
+        </div>
+
+        <p className="font-mono text-[11px] uppercase tracking-wider text-brand-muted">
+          {j.duration}
+        </p>
+
+        <p className="text-sm leading-relaxed text-brand-muted">{j.summary}</p>
+
+        <div className="flex flex-wrap gap-1.5 pt-1">
+          {j.tags.map((tag) => (
+            <span
+              key={tag}
+              className="rounded-md bg-brand-surface-alt px-2 py-1 font-mono text-[11px] text-brand-muted"
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
       </div>
     </div>
   );

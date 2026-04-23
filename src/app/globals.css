@@ -1,8 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-@custom-variant dark (&:is(.dark *));
-/* @plugin "daisyui"; */
 @plugin "daisyui" {
   themes: light --default;
 }
@@ -43,6 +41,18 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+  --color-brand-accent: var(--brand-accent);
+  --color-brand-accent-soft: var(--brand-accent-soft);
+  --color-brand-ink: var(--brand-ink);
+  --color-brand-muted: var(--brand-muted);
+  --color-brand-tint: var(--brand-tint);
+  --color-brand-surface: var(--brand-surface);
+  --color-brand-surface-alt: var(--brand-surface-alt);
+  --color-brand-divider: var(--brand-divider);
+  --color-brand-warm-from: var(--brand-warm-from);
+  --color-brand-warm-to: var(--brand-warm-to);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
 }
 
 :root {
@@ -78,47 +88,74 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
-}
 
-.dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+  /* Brand palette */
+  --brand-accent: #355794;
+  --brand-accent-soft: #eef2f9;
+  --brand-ink: #0a0a0a;
+  --brand-muted: #6b7280;
+  --brand-tint: #f4f6fb;
+  --brand-surface: #ffffff;
+  --brand-surface-alt: #f8f8f8;
+  --brand-divider: #e9ebee;
+  --brand-warm-from: #61605e;
+  --brand-warm-to: #b1afa9;
 }
 
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
+  html {
+    scroll-behavior: smooth;
+  }
   body {
     @apply bg-background text-foreground;
+    font-feature-settings: "ss01", "cv01", "cv11";
   }
+}
+
+@utility kicker {
+  @apply inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.18em] text-brand-accent;
+}
+
+@utility kicker-dot {
+  @apply inline-block h-1.5 w-1.5 rounded-full bg-brand-accent;
+}
+
+/* Scroll-reveal: JS toggles data-revealed="true" via IntersectionObserver */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+  transition-delay: var(--reveal-delay, 0ms);
+}
+[data-reveal][data-revealed="true"] {
+  opacity: 1;
+  transform: translateY(0);
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* Aurora backdrop for hero */
+.hero-backdrop {
+  background:
+    radial-gradient(60% 50% at 15% 10%, rgba(53, 87, 148, 0.10), transparent 60%),
+    radial-gradient(50% 40% at 90% 20%, rgba(53, 87, 148, 0.07), transparent 65%),
+    radial-gradient(40% 30% at 50% 100%, rgba(53, 87, 148, 0.06), transparent 70%),
+    #ffffff;
+}
+
+/* Subtle grid texture */
+.grid-texture {
+  background-image:
+    linear-gradient(to right, rgba(10, 10, 10, 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(10, 10, 10, 0.035) 1px, transparent 1px);
+  background-size: 36px 36px;
+  mask-image: radial-gradient(ellipse at center, black 40%, transparent 75%);
 }

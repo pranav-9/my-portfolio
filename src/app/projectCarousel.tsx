@@ -1,51 +1,58 @@
 import Image from "next/image";
 import React from "react";
+import { ArrowUpRight } from "lucide-react";
+import type { ProjectDetails } from "./project";
 
-const ProjectCarousel = (props: {
-  projectDetails: {
-    title: string;
-    description: string;
-    imageUrl: string;
-    badges: string[];
-    website: string;
-  };
-}) => {
+const ProjectCarousel = (props: { projectDetails: ProjectDetails }) => {
+  const p = props.projectDetails;
   return (
-    <div className=" flex flex-col gap-4 w-80 sm:w-100  bg-gray-200 rounded-2xl  min-h-[500px] ">
-      <div className="flex justify-center border-2 rounded-2xl w-full">
+    <a
+      href={p.website}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="group flex h-full flex-col overflow-hidden rounded-3xl border border-brand-divider bg-white transition duration-300 hover:-translate-y-1 hover:border-brand-ink hover:shadow-[0_30px_80px_-30px_rgba(53,87,148,0.35)]"
+    >
+      <div className="relative aspect-[16/10] overflow-hidden bg-brand-surface-alt">
         <Image
-          src={props.projectDetails.imageUrl}
-          alt="Burger"
-          height={100}
-          width={400}
-          // objectFit="cover"
-          className="rounded-2xl "
+          src={p.imageUrl}
+          alt={`${p.title} — project screenshot`}
+          fill
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          className="object-cover transition duration-500 group-hover:scale-[1.03]"
         />
-      </div>
-
-      <div className="flex flex-col gap-4 sm:gap-8 p-2 ml-4">
-        <p className="font-bold text-2xl">{props.projectDetails.title}</p>
-        <p className="font-mono  ">{props.projectDetails.description}</p>
-        {props.projectDetails.badges && (
-          <div className="flex gap-2">
-            {props.projectDetails.badges.map((badge, index) => (
-              <div key={index} className="badge  badge-neutral  p-2">
-                {badge}
-              </div>
-            ))}
-          </div>
-        )}
-
-        <div className="flex justify-end">
-          <a
-            className="link link-hover underline"
-            href={props.projectDetails.website}
-          >
-            Visit Website
-          </a>
+        <div className="absolute right-3 top-3 rounded-full bg-white/90 p-2 opacity-0 backdrop-blur transition group-hover:opacity-100">
+          <ArrowUpRight size={16} className="text-brand-ink" />
         </div>
       </div>
-    </div>
+
+      <div className="flex flex-1 flex-col gap-4 p-6">
+        <div className="flex items-start justify-between gap-3">
+          <h3 className="text-xl font-semibold tracking-tight text-brand-ink">
+            {p.title}
+          </h3>
+          <span className="whitespace-nowrap font-mono text-[10px] uppercase tracking-wider text-brand-accent">
+            {p.role}
+          </span>
+        </div>
+
+        <p className="text-sm leading-relaxed text-brand-muted">
+          {p.description}
+        </p>
+
+        <p className="text-sm font-medium text-brand-ink">{p.impact}</p>
+
+        <div className="mt-auto flex flex-wrap gap-1.5 pt-2">
+          {p.stack.map((tech) => (
+            <span
+              key={tech}
+              className="rounded-md bg-brand-surface-alt px-2 py-1 font-mono text-[11px] text-brand-muted"
+            >
+              {tech}
+            </span>
+          ))}
+        </div>
+      </div>
+    </a>
   );
 };
 

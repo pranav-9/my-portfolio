@@ -1,109 +1,83 @@
-import { MoveVertical, Octagon } from "lucide-react";
-import Image from "next/image";
 import React from "react";
-import { ChartPieLabel } from "./chart";
-import ProjectCarousel from "./projectCarousel";
-import JobHolder from "./jobHolder";
+import JobHolder, { type JobDetails } from "./jobHolder";
 import SectionHeader from "./sectionHeader";
+import Reveal from "./reveal";
 
 const TimeLine = () => {
   const sectionDetails = {
+    kicker: "7+ years shipping",
     title: "Experience",
-    subtitle: "7 years of workex across varied organizations and roles",
+    subtitle:
+      "Fintech, consumer health, entertainment, and 0-to-1 startups. Individual contributor to CTO.",
   };
 
-  const jobExperiences: {
-    role: string;
-    company: string;
-    year: string;
-    frontend: boolean;
-    backend: boolean;
-    companyImage: string;
-  }[] = [
+  const jobExperiences: JobDetails[] = [
     {
-      year: "2018",
-      role: "Dashboard Developer",
+      duration: "2018 — 2020",
+      role: "Software Engineer",
       company: "Citibank",
       companyImage: "/citi.png",
-      frontend: true,
-      backend: false,
+      summary:
+        "Built internal dashboards and SpringBoot services powering institutional workflows.",
+      tags: ["Java", "SpringBoot", "Dashboards"],
     },
     {
-      year: "2019",
-      role: "SpringBoot Developer",
-      company: "Citibank",
-      companyImage: "/citi.png",
-      frontend: false,
-      backend: true,
-    },
-    // {
-    //   year: "2020",
-    //   role: "",
-
-    //   badges: [
-    //     { text: "", color: "badge-primary" },
-    //     { text: "", color: "badge-success" },
-    //   ],
-    // },
-    {
-      year: "2021",
-      role: "Node.js Developer ",
-      company: "Spark Brighter Thinking",
+      duration: "2021",
+      role: "Node.js Developer",
+      company: "Spark · via Toptal",
       companyImage: "/toptal.png",
-      frontend: false,
-      backend: true,
+      summary:
+        "Backend integrations and service work for a UK edtech publisher through Toptal.",
+      tags: ["Node.js", "Integrations"],
     },
     {
-      year: "2022",
+      duration: "2022",
       role: "Senior Node.js Developer",
       company: "Xendit",
       companyImage: "/xendit-2.png",
-      frontend: false,
-      backend: true,
+      summary:
+        "Payments infrastructure — high-throughput APIs for one of SEA's largest payment gateways.",
+      tags: ["Node.js", "Payments", "Scale"],
     },
     {
-      year: "2023",
+      duration: "2023 — 2024",
       role: "Chief Technology Officer",
       company: "On The Move",
       companyImage: "/otm-logo.png",
-      frontend: true,
-      backend: true,
+      summary:
+        "Founded and led engineering. Shipped platform, app, and marketing site end-to-end.",
+      tags: ["Full stack", "0-to-1", "Leadership"],
     },
-    // {
-    //   year: "2024",
-    //   role: "",
-    //   badges: [
-    //     { text: "", color: "badge-primary" },
-    //     { text: "", color: "badge-success" },
-    //   ],
-    // },
     {
-      year: "2025",
+      duration: "2025 — now",
       role: "Automation Consultant",
       company: "Journey Entertainment",
       companyImage: "/toptal.png",
-      frontend: true,
-      backend: true,
+      summary:
+        "Automation and AI-powered tooling for creative and operational workflows.",
+      tags: ["Automation", "GenAI", "Full stack"],
     },
-    // Add more job experiences as needed
   ];
 
   return (
-    <div className="flex flex-col  p-10 bg-gradient-to-b from-[#f8f8f8] to-[#ffffff] gap-8 min-h-screen justify-center">
+    <section
+      id="experience"
+      className="bg-gradient-to-b from-brand-surface-alt to-brand-surface px-6 py-24 sm:py-32"
+    >
       <SectionHeader sectionDetails={sectionDetails} />
 
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-0 sm:mr-[12%] sm:ml-[12%]">
-        {jobExperiences.map((job, index) => (
-          <JobHolder key={index} jobDetails={job}></JobHolder>
-        ))}
-      </div>
+      <div className="relative mx-auto max-w-4xl">
+        <div className="absolute left-[11px] top-2 bottom-2 w-px bg-brand-divider sm:left-1/2 sm:-translate-x-1/2" />
 
-      {/* <div className="flex gap-8 justify-center justify-items-center ">
-        <ProjectCarousel></ProjectCarousel>
-        <ChartPieLabel></ChartPieLabel>
-        <ChartPieLabel></ChartPieLabel>
-      </div> */}
-    </div>
+        <div className="flex flex-col gap-10">
+          {jobExperiences.map((job, index) => (
+            <Reveal key={job.duration + job.company} delay={index * 80}>
+              <JobHolder jobDetails={job} align={index % 2 === 0 ? "left" : "right"} />
+            </Reveal>
+          ))}
+        </div>
+      </div>
+    </section>
   );
 };
 

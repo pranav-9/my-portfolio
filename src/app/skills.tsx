@@ -1,103 +1,135 @@
-import Image from "next/image";
 import React from "react";
-import ProjectCarousel from "./projectCarousel";
-import { title } from "process";
-import Skillbox from "./skillbox";
 import SectionHeader from "./sectionHeader";
-import SkillDomain from "./skillDomain";
+import Reveal from "./reveal";
+
+type SkillTier = "Production" | "Working knowledge" | "Exploring";
+
+type SkillGroup = {
+  domain: string;
+  tagline: string;
+  items: {
+    label: string;
+    tier: SkillTier;
+    stack: string[];
+  }[];
+};
+
+const tierStyles: Record<SkillTier, string> = {
+  Production: "bg-brand-ink text-white",
+  "Working knowledge": "bg-brand-accent-soft text-brand-accent",
+  Exploring: "bg-white text-brand-muted border border-brand-divider",
+};
 
 const Skills = () => {
   const sectionDetails = {
+    kicker: "Circle of competence",
     title: "Skills",
     subtitle:
-      "My Circle of Competence represents a wide breadth combined with specific depth",
+      "Breadth across the stack, depth where it matters. Grouped by where I am — not a self-rated percentage.",
   };
 
-  const skills: {
-    id: number;
-    title: string;
-    work: {
-      text: string;
-      color: string;
-      badges: string[];
-      skillLevel: number;
-    }[];
-  }[] = [
+  const groups: SkillGroup[] = [
     {
-      id: 1,
-      title: "Backend Work",
-      work: [
+      domain: "Backend",
+      tagline: "Where I spend most of my time.",
+      items: [
         {
-          text: "REST APIs",
-          color: "badge-primary",
-          badges: ["Express", "Nest.js", "FastAPI"],
-          skillLevel: 85,
+          label: "REST & API design",
+          tier: "Production",
+          stack: ["Node.js", "Express", "NestJS", "FastAPI"],
         },
         {
-          text: "API Integrations",
-          color: "badge-accent",
-          badges: ["clickup", "airtable", "hubspot"],
-          skillLevel: 70,
+          label: "Service integrations",
+          tier: "Production",
+          stack: ["ClickUp", "Airtable", "HubSpot", "Stripe"],
         },
         {
-          text: "Data Analytics",
-          color: "badge-secondary",
-          badges: ["Python", "Databricks"],
-          skillLevel: 50,
+          label: "Data pipelines",
+          tier: "Working knowledge",
+          stack: ["Python", "Databricks", "PostgreSQL"],
         },
-
         {
-          text: "GenAI Applications",
-          color: "badge-info",
-          badges: ["OpenAI", "Langchain"],
-          skillLevel: 35,
+          label: "GenAI applications",
+          tier: "Working knowledge",
+          stack: ["OpenAI", "LangChain", "RAG"],
         },
       ],
     },
     {
-      id: 2,
-      title: "Frontend Work",
-      work: [
+      domain: "Frontend",
+      tagline: "Shipping polished product surfaces.",
+      items: [
         {
-          text: "WebApps",
-          color: "badge-primary",
-          badges: ["React", "Next.js"],
-          skillLevel: 60,
+          label: "Web applications",
+          tier: "Production",
+          stack: ["React", "Next.js", "TypeScript"],
         },
         {
-          text: "Styling",
-          color: "badge-secondary",
-          badges: ["TailwindCSS", "DaisyUI", "shadcn/ui"],
-          skillLevel: 45,
+          label: "Design systems",
+          tier: "Production",
+          stack: ["Tailwind", "shadcn/ui", "DaisyUI"],
         },
         {
-          text: "SEO & Performance",
-          color: "badge-accent",
-          badges: ["Webflow", "Vercel"],
-          skillLevel: 30,
+          label: "SEO & performance",
+          tier: "Working knowledge",
+          stack: ["Webflow", "Vercel", "Core Web Vitals"],
         },
-        // {
-        //   text: "HTML & CSS",
-        //   color: "badge-info",
-        //   badges: ["HTML5", "CSS3"],
-        //   skillLevel: 90,
-        // },
       ],
     },
   ];
 
   return (
-    <div className="flex flex-col pt-16 p-10 bg-gradient-to-b from-[#ffffff] to-[#f8f8f8] min-h-screen">
+    <section
+      id="skills"
+      className="bg-gradient-to-b from-brand-surface to-brand-surface-alt px-6 py-24 sm:py-32"
+    >
       <SectionHeader sectionDetails={sectionDetails} />
 
-      {/* <div className="flex justify-center gap-4 justify-items-center"> */}
-      <div className="flex justify-center flex-col gap-8 ">
-        {skills.map((i, index) => (
-          <SkillDomain key={index} domainDetails={i}></SkillDomain>
+      <div className="mx-auto flex max-w-6xl flex-col gap-16">
+        {groups.map((group, gIdx) => (
+          <Reveal key={group.domain} delay={gIdx * 100} className="flex flex-col gap-6">
+            <div className="flex items-baseline justify-between border-b border-brand-divider pb-4">
+              <h3 className="text-2xl sm:text-3xl font-semibold tracking-tight text-brand-ink">
+                {group.domain}
+              </h3>
+              <p className="font-mono text-xs uppercase tracking-wider text-brand-muted">
+                {group.tagline}
+              </p>
+            </div>
+
+            <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+              {group.items.map((item) => (
+                <div
+                  key={item.label}
+                  className="group flex flex-col gap-4 rounded-2xl border border-brand-divider bg-white p-6 transition hover:-translate-y-0.5 hover:border-brand-ink hover:shadow-[0_20px_50px_-20px_rgba(53,87,148,0.25)]"
+                >
+                  <div className="flex items-start justify-between gap-3">
+                    <p className="text-lg font-semibold text-brand-ink">
+                      {item.label}
+                    </p>
+                    <span
+                      className={`whitespace-nowrap rounded-full px-2.5 py-1 text-[10px] font-medium uppercase tracking-wider ${tierStyles[item.tier]}`}
+                    >
+                      {item.tier}
+                    </span>
+                  </div>
+                  <div className="flex flex-wrap gap-1.5">
+                    {item.stack.map((tech) => (
+                      <span
+                        key={tech}
+                        className="rounded-md bg-brand-surface-alt px-2.5 py-1 font-mono text-xs text-brand-muted"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </Reveal>
         ))}
       </div>
-      {/* </div> */}
-    </div>
+    </section>
   );
 };
 
