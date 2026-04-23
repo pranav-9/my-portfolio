@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pranav Yadav — Fit Brief — Service Booking Chatbot</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #FDFCFA;
+    --ink: #1A1A1A;
+    --muted: #5A5A5A;
+    --rule: #E2DED7;
+    --accent: #1F4E79;
+    --accent-soft: #EAF1F8;
+    --accent-line: #C7D7E5;
+    --severity-red: #B4351C;
+    --severity-amber: #B8791A;
+    --severity-green: #3F6B3A;
+    --serif: 'Fraunces', 'Iowan Old Style', 'Charter', 'Georgia', serif;
+    --mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--serif);
+    font-size: 16px;
+    line-height: 1.55;
+    font-feature-settings: "kern", "liga", "onum";
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .page {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 72px 56px 96px;
+  }
+
+  /* ------- Header ------- */
+  header.masthead {
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 20px;
+    margin-bottom: 40px;
+  }
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 14px;
+  }
+  h1 {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: 42px;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    margin: 0 0 10px;
+    font-variation-settings: "opsz" 96, "SOFT" 40;
+  }
+  h1 .accent { color: var(--accent); font-style: italic; font-weight: 400; }
+  .meta {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 0.02em;
+  }
+  .meta .dot { color: var(--accent-line); margin: 0 10px; }
+
+  .intro {
+    font-size: 17px;
+    font-style: italic;
+    color: var(--muted);
+    max-width: 620px;
+    margin: 0 0 56px;
+    line-height: 1.5;
+  }
+
+  /* ------- Section Headings ------- */
+  section { margin-bottom: 56px; }
+  .section-num {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    color: var(--accent);
+    margin-bottom: 6px;
+  }
+  h2 {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: 28px;
+    letter-spacing: -0.015em;
+    margin: 0 0 24px;
+    line-height: 1.2;
+    font-variation-settings: "opsz" 72;
+  }
+  h3 {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: 17px;
+    margin: 0 0 6px;
+    letter-spacing: -0.005em;
+  }
+
+  /* ------- Strengths list ------- */
+  .strengths { counter-reset: item; }
+  .strength {
+    display: grid;
+    grid-template-columns: 40px 1fr;
+    gap: 18px;
+    margin-bottom: 22px;
+  }
+  .strength::before {
+    counter-increment: item;
+    content: counter(item, decimal-leading-zero);
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--accent);
+    padding-top: 3px;
+  }
+  .strength p {
+    margin: 0;
+    color: var(--ink);
+    font-size: 15.5px;
+    line-height: 1.6;
+  }
+  .strength p + p { margin-top: 6px; color: var(--muted); font-size: 14.5px; }
+
+  /* ------- Stretch Table ------- */
+  table.stretch-tbl {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    overflow: hidden;
+    font-size: 14.5px;
+  }
+  table.stretch-tbl th,
+  table.stretch-tbl td {
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--rule);
+    line-height: 1.5;
+    vertical-align: top;
+    text-align: left;
+  }
+  table.stretch-tbl tr:last-child td { border-bottom: none; }
+  table.stretch-tbl th {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    background: #F6F3EE;
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
+  table.stretch-tbl th:nth-child(1), table.stretch-tbl td:nth-child(1) { width: 30%; }
+  table.stretch-tbl th:nth-child(2), table.stretch-tbl td:nth-child(2) { width: 14%; }
+  table.stretch-tbl th:nth-child(3), table.stretch-tbl td:nth-child(3) { width: 56%; }
+  table.stretch-tbl .gap-name { font-weight: 600; color: var(--ink); }
+  table.stretch-tbl .sev {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+  .sev.amber { color: var(--severity-amber); }
+  .sev.green { color: var(--severity-green); }
+  .sev.red   { color: var(--severity-red); }
+  table.stretch-tbl .fix { color: var(--muted); }
+
+  /* ------- Architecture ------- */
+  .arch-intro {
+    font-size: 15.5px;
+    color: var(--muted);
+    margin: 0 0 32px;
+    max-width: 660px;
+    line-height: 1.6;
+  }
+
+  .arch {
+    border: 1px solid var(--rule);
+    background: #FBFAF6;
+    border-radius: 6px;
+    padding: 28px 24px 32px;
+    margin-bottom: 28px;
+  }
+
+  .tier {
+    display: table;
+    width: 100%;
+    border-spacing: 10px 0;
+    margin: -2px -10px 14px;
+    table-layout: fixed;
+  }
+  .tier > * {
+    display: table-cell;
+    vertical-align: top;
+    width: 33.33%;
+  }
+  .tier.single > * { width: 100%; }
+
+  .tier-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+
+  .node {
+    background: #FFFFFF;
+    border: 1px solid var(--accent-line);
+    border-radius: 4px;
+    padding: 10px 14px;
+    font-size: 13.5px;
+  }
+  .node-title {
+    font-weight: 600;
+    font-size: 13.5px;
+    color: var(--accent);
+    margin-bottom: 2px;
+  }
+  .node-sub {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+    line-height: 1.45;
+  }
+
+  .node.core {
+    background: var(--accent-soft);
+    border-color: var(--accent);
+  }
+  .node.cross {
+    background: #F6F3EE;
+    border-color: var(--rule);
+  }
+  .node.cross .node-title { color: var(--ink); }
+
+  .flow-arrow {
+    text-align: center;
+    font-family: var(--mono);
+    color: var(--accent-line);
+    font-size: 14px;
+    margin: 4px 0;
+    line-height: 1;
+  }
+
+  .callout {
+    margin-top: 18px;
+    padding: 14px 18px;
+    border-left: 3px solid var(--accent);
+    background: var(--accent-soft);
+    border-radius: 0 4px 4px 0;
+    font-size: 14.5px;
+  }
+  .callout strong { color: var(--accent); font-weight: 600; }
+  .callout .code {
+    font-family: var(--mono);
+    font-size: 12.5px;
+    color: var(--ink);
+    background: #FFFFFF;
+    padding: 2px 6px;
+    border-radius: 3px;
+    border: 1px solid var(--accent-line);
+  }
+
+  /* ------- Principles ------- */
+  h3.sub {
+    font-size: 14px;
+    font-family: var(--mono);
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 36px 0 16px;
+  }
+  .principles {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 22px 32px;
+  }
+  .principle {
+    flex: 1 1 calc(50% - 16px);
+    min-width: 240px;
+    border-top: 1px solid var(--accent-line);
+    padding-top: 12px;
+  }
+  .principle h4 {
+    margin: 0 0 6px;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .principle p {
+    margin: 0;
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.55;
+  }
+
+  /* ------- Unknowns ------- */
+  .unknowns ul {
+    margin: 0;
+    padding-left: 18px;
+    color: var(--muted);
+    font-size: 14.5px;
+    line-height: 1.7;
+  }
+  .unknowns ul li { margin-bottom: 4px; }
+  .unknowns ul li strong { color: var(--ink); font-weight: 600; }
+
+  /* ------- Footer ------- */
+  footer {
+    margin-top: 72px;
+    padding-top: 20px;
+    border-top: 1px solid var(--rule);
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.03em;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  /* ------- Print ------- */
+  @media print {
+    body { background: white; }
+    .page { padding: 24px 32px 40px; max-width: 100%; }
+    section { page-break-inside: avoid; margin-bottom: 32px; }
+    .arch { page-break-inside: avoid; }
+    .strength { page-break-inside: avoid; }
+  }
+
+  @media (max-width: 640px) {
+    .page { padding: 32px 20px 48px; }
+    h1 { font-size: 30px; }
+    table.stretch-tbl th:nth-child(1), table.stretch-tbl td:nth-child(1),
+    table.stretch-tbl th:nth-child(2), table.stretch-tbl td:nth-child(2),
+    table.stretch-tbl th:nth-child(3), table.stretch-tbl td:nth-child(3) { width: auto; }
+    .tier { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Masthead -->
+  <header class="masthead">
+    <div class="eyebrow">Interview Brief · Toptal × Volvo Car USA</div>
+    <h1>Pranav Yadav <span class="accent">— Fit Brief</span></h1>
+    <div class="meta">
+      Senior AI/ML Engineer <span class="dot">·</span>
+      Service Booking Chatbot Pilot <span class="dot">·</span>
+      23 April 2026
+    </div>
+  </header>
+
+  <p class="intro">
+    Prepared so our conversation can focus on the project itself. Three sections: where
+    I&rsquo;m a strong fit, where I&rsquo;m a stretch, and how I&rsquo;d architect the solution.
+  </p>
+
+  <!-- Section 1 — Strengths -->
+  <section>
+    <div class="section-num">01 — Strengths</div>
+    <h2>Where I&rsquo;m a strong fit</h2>
+
+    <div class="strengths">
+      <div class="strength">
+        <div>
+          <h3>Production conversational AI, shipped end-to-end.</h3>
+          <p>
+            <strong>Easy Leads</strong>: a WhatsApp chatbot in production on NestJS + OpenAI + MongoDB.
+            Meta webhook ingestion, phone-based lead lookup, per-lead conversation summary in Mongo
+            (the primitive RAG replaces), intent classification, rule-plus-LLM lead scoring, and
+            handoff state for human escalation.
+          </p>
+          <p>
+            The shape of a service-booking bot is the same shape; the channel and grounding corpus change.
+          </p>
+        </div>
+      </div>
+
+      <div class="strength">
+        <div>
+          <h3>LLM engineering discipline, not just API calls.</h3>
+          <p>
+            <strong>Concallyser</strong> (Python + Gemini Files API) runs every model call against
+            a versioned JSON Schema; normalizers rank, filter, clamp, and de-duplicate output before
+            anything is persisted; deterministic scoring is computed in code after the fact.
+          </p>
+          <p>
+            This is the discipline that prevents a booking bot from confidently scheduling an oil change
+            on a VIN that doesn&rsquo;t exist.
+          </p>
+        </div>
+      </div>
+
+      <div class="strength">
+        <div>
+          <h3>API integration depth &mdash; arguably my single strongest area.</h3>
+          <p>
+            Production integrations across HubSpot, Zoho CRM, Twilio, WhatsApp Cloud, Stripe,
+            FMCSA, NHTSA vPIC, OpenAI, Instantly, Airtable, and ClickUp. Webhooks, OAuth refresh,
+            idempotency, retries, and fire-and-forget vs request-path trade-offs.
+          </p>
+          <p>
+            Booking-API integration is my unglamorous specialty.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 2 — Stretch -->
+  <section>
+    <div class="section-num">02 — Honest read</div>
+    <h2>Where I&rsquo;m a stretch</h2>
+
+    <table class="stretch-tbl">
+      <thead>
+        <tr>
+          <th>Gap</th>
+          <th>Severity</th>
+          <th>How I close it</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="gap-name">Azure OpenAI / Azure AI Search</td>
+          <td><span class="sev amber">Amber</span></td>
+          <td class="fix">
+            Built on OpenAI direct and Gemini on GCP. Azure OpenAI is the same API behind
+            Microsoft auth; AI Search is a standard retrieval service. A platform ramp, not a skill gap.
+          </td>
+        </tr>
+        <tr>
+          <td class="gap-name">Production RAG (vector store)</td>
+          <td><span class="sev amber">Amber</span></td>
+          <td class="fix">
+            Document-grounded LLM work is the hard part &mdash; shipped it twice (Concallyser transcripts + reports,
+            Freight Expert underwriting summary). Assembling it with a vector index is the last mile,
+            not a new discipline.
+          </td>
+        </tr>
+        <tr>
+          <td class="gap-name">Automotive / manufacturing industry</td>
+          <td><span class="sev green">Green</span></td>
+          <td class="fix">
+            Booking flows, slot-filling, and intent classification don&rsquo;t change with the asset class.
+            Ramp on Volvo&rsquo;s service taxonomy is a week of reading, not a career pivot.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Section 3 — Architecture -->
+  <section>
+    <div class="section-num">03 — Solution sketch</div>
+    <h2>How I&rsquo;d architect the chatbot</h2>
+
+    <p class="arch-intro">
+      A rough target architecture for the pilot. The emphasis is on <strong>grounding</strong>
+      (every factual claim traced to retrieved source) and <strong>deterministic action</strong>
+      (the LLM never writes to the booking API directly; it proposes, the user confirms, code executes).
+    </p>
+
+    <!-- Architecture Diagram -->
+    <div class="arch">
+
+      <!-- Channels -->
+      <div class="tier-label">Tier 1 · User channels</div>
+      <div class="tier cols-3">
+        <div class="node">
+          <div class="node-title">Volvo App</div>
+          <div class="node-sub">Embedded chat surface</div>
+        </div>
+        <div class="node">
+          <div class="node-title">Web (volvocars.com)</div>
+          <div class="node-sub">Service-booking widget</div>
+        </div>
+        <div class="node">
+          <div class="node-title">Voice / SMS (future)</div>
+          <div class="node-sub">Same backend, different adapter</div>
+        </div>
+      </div>
+
+      <div class="flow-arrow">▼</div>
+
+      <!-- Gateway -->
+      <div class="tier-label">Tier 2 · Gateway & session</div>
+      <div class="tier single">
+        <div class="node">
+          <div class="node-title">API Management + Auth</div>
+          <div class="node-sub">Azure API Management · Volvo ID / OAuth · rate-limit · request shaping</div>
+        </div>
+      </div>
+
+      <div class="flow-arrow">▼</div>
+
+      <!-- Orchestrator (core) -->
+      <div class="tier-label">Tier 3 · Conversation orchestrator</div>
+      <div class="tier single">
+        <div class="node core">
+          <div class="node-title">Orchestrator (Azure Functions, Python)</div>
+          <div class="node-sub">
+            Load session state · load vehicle context (VIN, telematics, service history) ·
+            classify turn → retrieval / action proposal / clarification · compose tool plan
+          </div>
+        </div>
+      </div>
+
+      <div class="flow-arrow">▼</div>
+
+      <!-- Intelligence Core -->
+      <div class="tier-label">Tier 4 · Intelligence core</div>
+      <div class="tier cols-3">
+        <div class="node">
+          <div class="node-title">RAG</div>
+          <div class="node-sub">
+            Azure AI Search (hybrid: vector + BM25 + semantic reranker) over service manuals,
+            recall bulletins, pricing, dealer info
+          </div>
+        </div>
+        <div class="node">
+          <div class="node-title">LLM</div>
+          <div class="node-sub">
+            Azure OpenAI: GPT-4o for reasoning · text-embedding-3-large for retrieval ·
+            structured-output mode for tool calls
+          </div>
+        </div>
+        <div class="node">
+          <div class="node-title">Tools (deterministic)</div>
+          <div class="node-sub">
+            Booking API · telematics · dealer availability · customer &amp; vehicle DB ·
+            all typed, idempotent, retryable
+          </div>
+        </div>
+      </div>
+
+      <div class="flow-arrow">▼</div>
+
+      <!-- Cross-cutting -->
+      <div class="tier-label">Tier 5 · Cross-cutting</div>
+      <div class="tier cols-3">
+        <div class="node cross">
+          <div class="node-title">State</div>
+          <div class="node-sub">
+            Cosmos DB · conversation summary + recent turns per session; vehicle context
+            cached per VIN
+          </div>
+        </div>
+        <div class="node cross">
+          <div class="node-title">Guardrails</div>
+          <div class="node-sub">
+            JSON-schema validation on every tool call · PII redaction · Azure content filter ·
+            confidence threshold → human escalation
+          </div>
+        </div>
+        <div class="node cross">
+          <div class="node-title">Observability</div>
+          <div class="node-sub">
+            Application Insights · conversation tracing · cost/latency per turn ·
+            golden-conversation eval harness
+          </div>
+        </div>
+      </div>
+
+      <!-- The callout -->
+      <div class="callout">
+        <strong>Critical loop &mdash; booking actions:</strong>
+        the LLM produces a typed <span class="code">proposed_booking</span> object;
+        orchestrator renders a confirmation message; the user says yes; <em>only then</em>
+        does a deterministic handler call the booking API with an idempotency key. The LLM never
+        writes to the booking system on its own.
+      </div>
+    </div>
+
+    <!-- Design Principles -->
+    <h3 class="sub">Four design principles driving this</h3>
+    <div class="principles">
+
+      <div class="principle">
+        <h4>Grounded by default</h4>
+        <p>
+          If the bot states a service code, price, wait time, or policy, it must come from
+          a retrieved source. No free-form reasoning on facts the business cares about.
+        </p>
+      </div>
+
+      <div class="principle">
+        <h4>Propose → confirm → execute</h4>
+        <p>
+          No LLM call is ever allowed to directly commit a booking. Proposals are typed
+          objects; execution is deterministic code with idempotency keys and retries.
+        </p>
+      </div>
+
+      <div class="principle">
+        <h4>Dual state</h4>
+        <p>
+          Session state (short-term, per-conversation) and vehicle state (long-term, per-VIN)
+          are separate stores. Telematics signals inject as structured tool results, not free text.
+        </p>
+      </div>
+
+      <div class="principle">
+        <h4>Eval harness from day one</h4>
+        <p>
+          A regression suite of scripted conversations (happy path, edge cases, adversarial)
+          runs on every prompt change. No blind rollouts.
+        </p>
+      </div>
+
+    </div>
+
+    <!-- Unknowns -->
+    <h3 class="sub">Assumptions I&rsquo;d want to validate early</h3>
+    <div class="unknowns">
+      <ul>
+        <li><strong>Booking API surface:</strong> full CRUD or read-only? Does it support tentative holds and idempotency keys?</li>
+        <li><strong>Telematics:</strong> real-time stream, batch, or polled? Which diagnostic signals surface to the chatbot layer today?</li>
+        <li><strong>Corpus:</strong> is there an existing service-content index, or does the RAG corpus need assembly from scratch?</li>
+        <li><strong>Success metric:</strong> booking conversion, agent deflection, CSAT, or a composite?</li>
+      </ul>
+    </div>
+
+  </section>
+
+  <footer>
+    <span>Pranav Yadav</span>
+    <span>Prepared 23 April 2026</span>
+  </footer>
+
+</div>
+</body>
+</html>

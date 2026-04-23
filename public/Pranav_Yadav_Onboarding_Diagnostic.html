@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pranav Yadav — Onboarding Diagnostic — Service Booking Chatbot</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #FDFCFA;
+    --ink: #1A1A1A;
+    --muted: #5A5A5A;
+    --rule: #E2DED7;
+    --accent: #1F4E79;
+    --accent-soft: #EAF1F8;
+    --accent-line: #C7D7E5;
+
+    /* Quadrant palettes */
+    --q-measure-bg: #F5F1F8;
+    --q-measure-acc: #5B3E8C;
+    --q-measure-line: #D8CBE5;
+
+    --q-understand-bg: #EFF4FA;
+    --q-understand-acc: #1F4E79;
+    --q-understand-line: #C7D7E5;
+
+    --q-core-bg: #EEF4EE;
+    --q-core-acc: #3F6B3A;
+    --q-core-line: #CBDEC9;
+
+    --q-trust-bg: #F8EFEC;
+    --q-trust-acc: #B4351C;
+    --q-trust-line: #E6CAC0;
+
+    --serif: 'Fraunces', 'Iowan Old Style', 'Charter', 'Georgia', serif;
+    --mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--serif);
+    font-size: 16px;
+    line-height: 1.55;
+    font-feature-settings: "kern", "liga", "onum";
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .page {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 72px 56px 96px;
+  }
+
+  /* Masthead */
+  header.masthead {
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 20px;
+    margin-bottom: 32px;
+  }
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 14px;
+  }
+  h1 {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: 40px;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    margin: 0 0 10px;
+    font-variation-settings: "opsz" 96, "SOFT" 40;
+  }
+  h1 .accent { color: var(--accent); font-style: italic; font-weight: 400; }
+  .meta {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 0.02em;
+  }
+  .meta .dot { color: var(--accent-line); margin: 0 10px; }
+
+  /* Framing */
+  .framing {
+    background: #F6F3EE;
+    border-left: 3px solid var(--accent);
+    padding: 18px 22px;
+    border-radius: 0 4px 4px 0;
+    margin-bottom: 40px;
+  }
+  .framing p {
+    margin: 0;
+    font-size: 15.5px;
+    line-height: 1.6;
+    color: var(--ink);
+  }
+  .framing .lead {
+    font-weight: 600;
+    color: var(--accent);
+    font-size: 14px;
+    font-family: var(--mono);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .framing em { font-style: italic; color: var(--muted); }
+
+  /* 2x2 Grid — using display:table for universal compatibility */
+  .critical-title {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 14px;
+  }
+  table.critical-grid {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 16px 16px;
+    margin: 0 -16px 8px;
+    table-layout: fixed;
+  }
+  table.critical-grid td {
+    width: 50%;
+    vertical-align: top;
+    padding: 0;
+  }
+
+  /* Quadrant card */
+  .quadrant {
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    padding: 22px 24px 24px;
+    background: #fff;
+    position: relative;
+  }
+  .quadrant.measure    { background: var(--q-measure-bg);    border-color: var(--q-measure-line); }
+  .quadrant.understand { background: var(--q-understand-bg); border-color: var(--q-understand-line); }
+  .quadrant.core       { background: var(--q-core-bg);       border-color: var(--q-core-line); }
+  .quadrant.trust      { background: var(--q-trust-bg);      border-color: var(--q-trust-line); }
+
+  .quadrant h3 {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: 20px;
+    letter-spacing: -0.01em;
+    margin: 0 0 4px;
+    line-height: 1.2;
+    font-variation-settings: "opsz" 72;
+  }
+  .quadrant.measure    h3 { color: var(--q-measure-acc); }
+  .quadrant.understand h3 { color: var(--q-understand-acc); }
+  .quadrant.core       h3 { color: var(--q-core-acc); }
+  .quadrant.trust      h3 { color: var(--q-trust-acc); }
+
+  .quadrant .q-question {
+    font-style: italic;
+    font-size: 14px;
+    color: var(--muted);
+    margin: 0 0 16px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid;
+  }
+  .quadrant.measure    .q-question { border-color: var(--q-measure-line); }
+  .quadrant.understand .q-question { border-color: var(--q-understand-line); }
+  .quadrant.core       .q-question { border-color: var(--q-core-line); }
+  .quadrant.trust      .q-question { border-color: var(--q-trust-line); }
+
+  /* Item list */
+  .quadrant ol {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    counter-reset: q-item;
+  }
+  .quadrant li {
+    counter-increment: q-item;
+    padding: 0 0 12px 26px;
+    position: relative;
+    font-size: 14.5px;
+    line-height: 1.5;
+  }
+  .quadrant li::before {
+    content: counter(q-item) ".";
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 500;
+    padding-top: 2px;
+  }
+  .quadrant.measure    li::before { color: var(--q-measure-acc); }
+  .quadrant.understand li::before { color: var(--q-understand-acc); }
+  .quadrant.core       li::before { color: var(--q-core-acc); }
+  .quadrant.trust      li::before { color: var(--q-trust-acc); }
+
+  .quadrant li:last-child { padding-bottom: 0; }
+
+  .item-title {
+    font-weight: 600;
+    color: var(--ink);
+    font-size: 14.5px;
+  }
+  .item-desc {
+    display: block;
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 3px;
+    line-height: 1.5;
+  }
+  .item-desc code, .quadrant li code {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    background: rgba(255,255,255,0.7);
+    padding: 1px 5px;
+    border-radius: 3px;
+    color: var(--ink);
+  }
+
+  /* Critical tag */
+  .tag {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 9.5px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 500;
+    padding: 2px 7px;
+    border-radius: 3px;
+    margin-left: 6px;
+    vertical-align: 1px;
+    white-space: nowrap;
+  }
+  .tag.critical {
+    background: #fff;
+    border: 1px solid;
+    color: #B4351C;
+    border-color: #E6CAC0;
+  }
+  .quadrant.measure    .tag.critical { color: var(--q-measure-acc);    border-color: var(--q-measure-line); }
+  .quadrant.understand .tag.critical { color: var(--q-understand-acc); border-color: var(--q-understand-line); }
+  .quadrant.core       .tag.critical { color: var(--q-core-acc);       border-color: var(--q-core-line); }
+  .quadrant.trust      .tag.critical { color: var(--q-trust-acc);      border-color: var(--q-trust-line); }
+
+  /* What I'd probe section */
+  .probes {
+    margin-top: 40px;
+  }
+  .probes h2 {
+    font-family: var(--mono);
+    font-weight: 500;
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 16px;
+  }
+  .probes .intro-line {
+    font-size: 15px;
+    color: var(--muted);
+    margin: 0 0 14px;
+    line-height: 1.6;
+    font-style: italic;
+  }
+  .probes ul {
+    margin: 0;
+    padding-left: 22px;
+    font-size: 14.5px;
+    line-height: 1.7;
+    color: var(--muted);
+  }
+  .probes ul li {
+    margin-bottom: 6px;
+  }
+  .probes ul li strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  /* Footer */
+  footer {
+    margin-top: 60px;
+    padding-top: 20px;
+    border-top: 1px solid var(--rule);
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.03em;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  /* Print */
+  @media print {
+    body { background: white; }
+    .page { padding: 24px 32px 40px; max-width: 100%; }
+    .critical-row { page-break-inside: avoid; }
+    .quadrant { page-break-inside: avoid; }
+  }
+
+  @media (max-width: 720px) {
+    .page { padding: 40px 24px 60px; }
+    h1 { font-size: 30px; }
+    table.critical-grid, table.critical-grid tr, table.critical-grid td {
+      display: block;
+      width: 100%;
+    }
+    table.critical-grid td { margin-bottom: 16px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Masthead -->
+  <header class="masthead">
+    <div class="eyebrow">Companion to Fit Brief · Toptal × Volvo Car USA</div>
+    <h1>Onboarding <span class="accent">Diagnostic</span></h1>
+    <div class="meta">
+      First-week orientation framework <span class="dot">·</span>
+      Service Booking Chatbot <span class="dot">·</span>
+      23 April 2026
+    </div>
+  </header>
+
+  <!-- Framing -->
+  <div class="framing">
+    <div class="lead">Framing</div>
+    <p>
+      This is the checklist I&rsquo;d walk through in my first week to get oriented &mdash; not an
+      assessment of what the team has built. Half of these items are probably already handled and
+      I just don&rsquo;t know it yet. <em>The goal is to find where the real gaps are and where I
+      can plug in, not to arrive with a verdict.</em>
+    </p>
+  </div>
+
+  <div class="critical-title">Four lenses — one critical item per lens</div>
+
+  <table class="critical-grid">
+    <tr>
+      <td style="width:50%;vertical-align:top;padding:0;">
+        <div class="quadrant measure">
+          <h3>Measure</h3>
+          <p class="q-question">Do we know how we&rsquo;re doing?</p>
+          <ol>
+            <li>
+              <span class="item-title">Eval harness</span>
+              <span class="tag critical">Critical</span>
+              <span class="item-desc">
+                Golden conversations covering happy paths and known edge cases; runs on every prompt
+                or retrieval change; blocks regressions before rollout.
+              </span>
+            </li>
+            <li>
+              <span class="item-title">Cost &amp; latency budgets</span>
+              <span class="item-desc">
+                Per-turn token cost and <code>p50</code>/<code>p95</code> latency tracked; alert thresholds wired up.
+              </span>
+            </li>
+            <li>
+              <span class="item-title">Product KPIs</span>
+              <span class="item-desc">
+                Booking conversion, human-deflection rate, CSAT &mdash; sliced by cohort and intent.
+              </span>
+            </li>
+          </ol>
+        </div>
+      </td>
+      <td style="width:50%;vertical-align:top;padding:0;">
+        <div class="quadrant understand">
+          <h3>Understand</h3>
+          <p class="q-question">What is actually happening in production?</p>
+          <ol>
+            <li>
+              <span class="item-title">Conversation tracing</span>
+              <span class="tag critical">Critical</span>
+              <span class="item-desc">
+                End-to-end turn traces (prompt, retrieved chunks, tool calls, completion) searchable by
+                session; Langfuse / Application Insights / equivalent.
+              </span>
+            </li>
+            <li>
+              <span class="item-title">Failure-mode clustering</span>
+              <span class="item-desc">
+                Weekly review of top failure categories &mdash; hallucinations, wrong tool choice,
+                broken slot-filling, escalation misses.
+              </span>
+            </li>
+            <li>
+              <span class="item-title">Intent coverage map</span>
+              <span class="item-desc">
+                Top-20 real user intents cross-tabbed against how well the bot handles each.
+              </span>
+            </li>
+          </ol>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td style="width:50%;vertical-align:top;padding:0;">
+        <div class="quadrant core">
+          <h3>Core system quality</h3>
+          <p class="q-question">Is the brain working well?</p>
+          <ol>
+            <li>
+              <span class="item-title">RAG retrieval quality</span>
+              <span class="tag critical">Critical</span>
+              <span class="item-desc">
+                Precision &amp; recall measured on golden queries; chunk-level eval; adversarial noise
+                injection; separate scores for retrieval vs generation quality.
+              </span>
+            </li>
+            <li>
+              <span class="item-title">Structured output discipline</span>
+              <span class="item-desc">
+                Pydantic schemas on every tool call; <code>validation_error_rate</code> tracked as a
+                first-class metric.
+              </span>
+            </li>
+            <li>
+              <span class="item-title">Prompt registry</span>
+              <span class="item-desc">
+                Versioned prompts in source control; every production response tagged with the prompt
+                version that produced it.
+              </span>
+            </li>
+            <li>
+              <span class="item-title">Context management</span>
+              <span class="item-desc">
+                Session state, vehicle context, token budget per turn &mdash; with explicit truncation
+                and summarization rules.
+              </span>
+            </li>
+          </ol>
+        </div>
+      </td>
+      <td style="width:50%;vertical-align:top;padding:0;">
+        <div class="quadrant trust">
+          <h3>Trust &amp; safety</h3>
+          <p class="q-question">Can we deploy with confidence?</p>
+          <ol>
+            <li>
+              <span class="item-title">Guardrails coverage</span>
+              <span class="tag critical">Critical</span>
+              <span class="item-desc">
+                Jailbreak resistance, PII leakage prevention, out-of-scope deflection, brand-safety
+                filters &mdash; each tested against a named adversarial suite.
+              </span>
+            </li>
+            <li>
+              <span class="item-title">Propose &rarr; confirm &rarr; execute</span>
+              <span class="item-desc">
+                Enforced in code for every booking-adjacent action, not only at the UX layer.
+                Covers cancellations, reschedules, and edge cases too.
+              </span>
+            </li>
+            <li>
+              <span class="item-title">Fallback &amp; escalation</span>
+              <span class="item-desc">
+                Confidence threshold &rarr; human handoff paths, end-to-end tested. Clear ownership
+                of escalated conversations.
+              </span>
+            </li>
+            <li>
+              <span class="item-title">Red-team &amp; audit log</span>
+              <span class="item-desc">
+                Scripted adversarial runs before each release; complete audit trail of LLM decisions
+                for post-incident review.
+              </span>
+            </li>
+          </ol>
+        </div>
+      </td>
+    </tr>
+  </table>
+
+  <!-- What I'd probe first -->
+  <section class="probes">
+    <h2>What I&rsquo;d probe in the first conversations</h2>
+    <p class="intro-line">
+      Three things I&rsquo;d expect are already in place. My first-week conversations would be
+      about the specifics underneath them:
+    </p>
+    <ul>
+      <li>
+        <strong>An eval harness exists.</strong> Question is what corpus it uses, how often it&rsquo;s
+        refreshed, and whether it reflects real user sessions or just the engineer&rsquo;s imagination.
+      </li>
+      <li>
+        <strong>Guardrails are configured.</strong> Question is whether they&rsquo;ve been
+        adversarially tested recently against a current jailbreak set &mdash; or only once at setup.
+      </li>
+      <li>
+        <strong>A confirmation pattern exists in the UX.</strong> Question is whether the same
+        invariant is enforced in code for <em>every</em> booking action &mdash; including reschedules,
+        cancellations, and anything a future tool might add.
+      </li>
+    </ul>
+  </section>
+
+  <footer>
+    <span>Pranav Yadav &middot; Onboarding Diagnostic</span>
+    <span>Companion to Fit Brief &middot; 23 April 2026</span>
+  </footer>
+
+</div>
+</body>
+</html>
