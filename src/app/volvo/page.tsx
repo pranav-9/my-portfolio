@@ -2,6 +2,7 @@ import React from "react";
 import type { Metadata } from "next";
 import SectionHeader from "../sectionHeader";
 import Reveal from "../reveal";
+import QuadrantGrid from "./quadrantGrid";
 
 export const metadata: Metadata = {
   title: "Volvo × Pranav Yadav — Fit signal",
@@ -355,23 +356,6 @@ const quadStyles: Record<QuadrantColor, QuadStyle> = {
   },
 };
 
-type Probe = { title: string; rest: string };
-
-const probes: Probe[] = [
-  {
-    title: "An eval harness exists.",
-    rest: "Question is what corpus it uses, how often it's refreshed, and whether it reflects real user sessions or just the engineer's imagination.",
-  },
-  {
-    title: "Guardrails are configured.",
-    rest: "Question is whether they've been adversarially tested recently against a current jailbreak set — or only once at setup.",
-  },
-  {
-    title: "A confirmation pattern exists in the UX.",
-    rest: "Question is whether the same invariant is enforced in code for every booking action — including reschedules, cancellations, and anything a future tool might add.",
-  },
-];
-
 const VolvoFitPage = () => {
   return (
     <main className="min-h-screen bg-brand-surface text-brand-ink">
@@ -614,94 +598,12 @@ const VolvoFitPage = () => {
             kicker: "Section 3",
             title: "Production health check",
             subtitle:
-              "What I'd walk through in my first week to find where I can plug in — not a verdict on what the team has built.",
+              "The usual structural pinch points when developing systems like this — four lenses, one critical item per lens.",
           }}
         />
 
         <div className="mx-auto flex max-w-6xl flex-col gap-8">
-          {/* 2x2 quadrant grid */}
-          <div className="grid gap-4 lg:grid-cols-2">
-            {quadrants.map((q, idx) => {
-              const style = quadStyles[q.color];
-              return (
-                <Reveal key={q.heading} delay={idx * 80}>
-                  <div
-                    className={`flex h-full flex-col gap-4 rounded-2xl border p-6 sm:p-7 ${style.card}`}
-                  >
-                    <div>
-                      <h3
-                        className={`text-xl font-semibold tracking-tight sm:text-2xl ${style.heading}`}
-                      >
-                        {q.heading}
-                      </h3>
-                      <p
-                        className={`mt-1 border-b pb-4 text-sm italic text-brand-muted ${style.question}`}
-                      >
-                        {q.question}
-                      </p>
-                    </div>
-                    <ol className="flex flex-col gap-3">
-                      {q.items.map((item, i) => (
-                        <li key={item.title} className="flex gap-3">
-                          <span
-                            className={`mt-0.5 shrink-0 font-mono text-xs font-semibold ${style.marker}`}
-                          >
-                            {String(i + 1).padStart(2, "0")}
-                          </span>
-                          <div className="flex flex-col gap-1">
-                            <div className="flex flex-wrap items-baseline gap-2">
-                              <span className="text-sm font-semibold text-brand-ink">
-                                {item.title}
-                              </span>
-                              {item.critical && (
-                                <span
-                                  className={`rounded border px-1.5 py-0.5 font-mono text-[9px] font-semibold uppercase tracking-[0.12em] ${style.criticalTag}`}
-                                >
-                                  Critical
-                                </span>
-                              )}
-                            </div>
-                            <p className="text-[13px] leading-snug text-brand-muted">
-                              {item.desc}
-                            </p>
-                          </div>
-                        </li>
-                      ))}
-                    </ol>
-                  </div>
-                </Reveal>
-              );
-            })}
-          </div>
-
-          {/* What I'd probe first */}
-          <div className="flex flex-col gap-6">
-            <Reveal>
-              <h3 className="text-2xl font-semibold tracking-tight text-brand-ink sm:text-3xl">
-                What I&apos;d probe first
-              </h3>
-            </Reveal>
-            <Reveal delay={80}>
-              <div className="flex flex-col gap-4 rounded-2xl border border-brand-divider bg-white p-6 sm:p-8">
-                <ul className="flex flex-col gap-3">
-                  {probes.map((p) => (
-                    <li
-                      key={p.title}
-                      className="flex gap-3 text-sm leading-relaxed text-brand-muted"
-                    >
-                      <span className="mt-1 text-brand-accent">·</span>
-                      <p>
-                        <span className="font-semibold text-brand-ink">
-                          {p.title}{" "}
-                        </span>
-                        {p.rest}
-                      </p>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </Reveal>
-          </div>
+          <QuadrantGrid quadrants={quadrants} quadStyles={quadStyles} />
         </div>
       </section>
 
