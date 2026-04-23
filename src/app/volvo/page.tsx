@@ -98,8 +98,7 @@ type IndexCard = {
   href: string;
   marker: string;
   title: string;
-  preview: string;
-  tags: string[];
+  tag: string;
 };
 
 const indexCards: IndexCard[] = [
@@ -107,25 +106,19 @@ const indexCards: IndexCard[] = [
     href: "#fit-matrix",
     marker: "01",
     title: "Fit matrix",
-    preview:
-      "Three strengths, three stretches — each with a severity flag.",
-    tags: ["Strengths", "Stretches", "Severity"],
+    tag: "strengths × weaknesses",
   },
   {
     href: "#solution",
     marker: "02",
     title: "Solution sketch",
-    preview:
-      "How I'd architect the chatbot — a 5-tier target diagram with the critical loop called out.",
-    tags: ["Architecture", "Tiers", "Critical loop"],
+    tag: "architecture",
   },
   {
     href: "#onboarding",
     marker: "03",
-    title: "Onboarding diagnostic",
-    preview:
-      "First-week orientation framework — four lenses, one critical item per lens.",
-    tags: ["Measure", "Understand", "Core", "Trust"],
+    title: "Production health check",
+    tag: "critical structural pain points",
   },
 ];
 
@@ -385,39 +378,23 @@ const VolvoFitPage = () => {
         <div className="mx-auto flex max-w-5xl flex-col gap-12">
           <div className="flex flex-col items-center gap-5 text-center">
             <Reveal>
-              <span className="kicker">
-                <span className="kicker-dot" />
-                Volvo Cars × Pranav Yadav
-              </span>
-            </Reveal>
-            <Reveal delay={80}>
               <h1 className="text-4xl font-semibold tracking-tight sm:text-6xl">
-                Where I fit, where I stretch.
+                Volvo Cars × Pranav Yadav
               </h1>
             </Reveal>
-            <Reveal delay={160}>
-              <p className="max-w-2xl text-base leading-relaxed text-brand-muted sm:text-lg">
-                Prepared so our conversation can focus on the project itself.
-                Jump in anywhere.
-              </p>
-            </Reveal>
-            <Reveal delay={220}>
-              <p className="font-mono text-xs leading-relaxed text-brand-muted/80">
-                Referred by Alfredo de Urquiza Anchorena
-                <span className="mx-2 text-brand-accent/40">·</span>
-                7+ years shipping production software
-                <span className="mx-2 text-brand-accent/40">·</span>
-                CTO &amp; senior IC background
+            <Reveal delay={80}>
+              <p className="text-sm uppercase tracking-[0.18em] text-brand-muted">
+                What this page contains
               </p>
             </Reveal>
           </div>
 
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {indexCards.map((card, idx) => (
-              <Reveal key={card.href} delay={240 + idx * 100}>
+              <Reveal key={card.href} delay={120 + idx * 100}>
                 <a
                   href={card.href}
-                  className="group flex h-full flex-col gap-4 rounded-2xl border border-brand-divider bg-brand-surface p-6 transition hover:-translate-y-0.5 hover:border-brand-accent hover:shadow-[0_20px_50px_-20px_rgba(53,87,148,0.25)] sm:p-8"
+                  className="group flex h-full flex-col gap-6 rounded-2xl border border-brand-divider bg-brand-surface p-6 transition hover:-translate-y-0.5 hover:border-brand-accent hover:shadow-[0_20px_50px_-20px_rgba(53,87,148,0.25)] sm:p-8"
                 >
                   <div className="flex items-baseline justify-between">
                     <span className="font-mono text-3xl font-semibold text-brand-accent sm:text-4xl">
@@ -430,18 +407,10 @@ const VolvoFitPage = () => {
                   <h3 className="text-xl font-semibold tracking-tight text-brand-ink sm:text-2xl">
                     {card.title}
                   </h3>
-                  <p className="text-sm leading-relaxed text-brand-muted">
-                    {card.preview}
-                  </p>
-                  <div className="mt-auto flex flex-wrap gap-1.5 pt-2">
-                    {card.tags.map((t) => (
-                      <span
-                        key={t}
-                        className="badge badge-soft badge-neutral p-2 font-mono text-xs"
-                      >
-                        {t}
-                      </span>
-                    ))}
+                  <div className="mt-auto pt-2">
+                    <span className="badge badge-soft badge-neutral p-2 font-mono text-xs">
+                      {card.tag}
+                    </span>
                   </div>
                 </a>
               </Reveal>
@@ -614,7 +583,7 @@ const VolvoFitPage = () => {
         </div>
       </section>
 
-      {/* Section 3 — Onboarding diagnostic */}
+      {/* Section 3 — Production health check */}
       <section
         id="onboarding"
         className="scroll-mt-8 bg-gradient-to-b from-brand-surface to-brand-surface-alt px-6 py-24 sm:py-32"
@@ -622,7 +591,7 @@ const VolvoFitPage = () => {
         <SectionHeader
           sectionDetails={{
             kicker: "Section 3",
-            title: "Onboarding diagnostic",
+            title: "Production health check",
             subtitle:
               "The checklist I'd walk through in my first week — four lenses, one critical item per lens.",
           }}
