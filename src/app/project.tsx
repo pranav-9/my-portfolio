@@ -17,7 +17,7 @@ const Project = () => {
   return (
     <section
       id="projects"
-      className="bg-gradient-to-b from-brand-surface-alt to-brand-surface px-6 py-24 sm:py-32"
+      className="bg-gradient-to-b from-brand-surface-alt to-brand-surface px-6 py-16 sm:py-32"
     >
       <SectionHeader sectionDetails={sectionDetails} />
       <div className="mx-auto grid max-w-6xl gap-8 sm:grid-cols-2 lg:grid-cols-3">

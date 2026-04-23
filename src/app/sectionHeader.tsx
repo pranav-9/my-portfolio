@@ -7,7 +7,7 @@ const SectionHeader = (props: {
   const { title, subtitle, kicker } = props.sectionDetails;
 
   return (
-    <Reveal className="mx-auto mb-16 flex max-w-3xl flex-col items-center gap-4 text-center">
+    <Reveal className="mx-auto mb-12 flex max-w-3xl flex-col items-center gap-4 text-center sm:mb-16">
       <span className="kicker">
         <span className="kicker-dot" />
         {kicker ?? title}

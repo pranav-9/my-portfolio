@@ -5,7 +5,7 @@ import Reveal from "./reveal";
 const Footer = () => {
   return (
     <footer id="contact" className="border-t border-brand-divider bg-white">
-      <div className="mx-auto max-w-6xl px-6 py-24 sm:py-32">
+      <div className="mx-auto max-w-6xl px-6 py-16 sm:py-32">
         <Reveal className="flex flex-col gap-10">
           <span className="kicker">
             <span className="kicker-dot" />
@@ -22,7 +22,8 @@ const Footer = () => {
               className="group inline-flex items-center gap-2 rounded-full bg-brand-ink px-6 py-3 text-sm font-medium text-white transition hover:bg-brand-accent"
             >
               <Mail size={16} />
-              pranavyadav996@gmail.com
+              <span className="sm:hidden">Email me</span>
+              <span className="hidden sm:inline">pranavyadav996@gmail.com</span>
               <ArrowUpRight
                 size={16}
                 className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"

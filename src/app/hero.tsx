@@ -8,16 +8,19 @@ const Hero = () => {
   return (
     <section className="hero-backdrop relative overflow-hidden">
       <div className="grid-texture absolute inset-0 pointer-events-none" />
-      <div className="relative mx-auto flex min-h-[calc(100vh-64px)] max-w-6xl flex-col-reverse items-center gap-12 px-6 py-16 sm:flex-row sm:gap-16 sm:py-24">
-        <Reveal className="flex flex-1 flex-col gap-8">
+      <div className="relative mx-auto flex max-w-6xl flex-col-reverse items-center gap-10 px-6 py-12 sm:min-h-[calc(100vh-64px)] sm:flex-row sm:gap-16 sm:py-24">
+        <Reveal className="flex flex-1 flex-col gap-6 sm:gap-8">
           <span className="kicker">
             <span className="kicker-dot" />
-            AI · Automation · Integrations · 9 yrs · 4 yrs Toptal
+            <span className="sm:hidden">AI · Automation · 9 yrs</span>
+            <span className="hidden sm:inline">
+              AI · Automation · Integrations · 9 yrs · 4 yrs Toptal
+            </span>
           </span>
-          <h1 className="text-5xl sm:text-7xl font-semibold tracking-tight text-brand-ink leading-[1.02]">
+          <h1 className="text-4xl sm:text-7xl font-semibold tracking-tight text-brand-ink leading-[1.02]">
             Pranav Yadav
           </h1>
-          <p className="max-w-xl text-xl sm:text-2xl text-brand-muted leading-relaxed">
+          <p className="max-w-xl text-lg sm:text-2xl text-brand-muted leading-relaxed">
             I ship products end-to-end — from{" "}
             <span className="text-brand-ink font-medium">LLM pipelines</span>{" "}
             to{" "}
@@ -47,7 +50,7 @@ const Hero = () => {
             </a>
           </div>
 
-          <div className="flex items-center gap-5 pt-4 text-brand-muted">
+          <div className="flex flex-wrap items-center gap-4 pt-4 text-brand-muted sm:gap-5">
             <a
               href="https://talent.toptal.com/resume/developers/pranav-yadav"
               target="_blank"
@@ -79,7 +82,7 @@ const Hero = () => {
           </div>
         </Reveal>
 
-        <Reveal delay={150} className="relative flex-shrink-0">
+        <Reveal delay={150} className="relative w-full max-w-[260px] sm:w-auto sm:max-w-none sm:flex-shrink-0">
           <div className="absolute -inset-6 rounded-[2rem] bg-gradient-to-br from-brand-accent/20 via-transparent to-brand-accent/5 blur-2xl" />
           <div className="relative overflow-hidden rounded-[1.75rem] border border-brand-divider bg-white p-2 shadow-[0_30px_80px_-20px_rgba(53,87,148,0.25)]">
             <Image
@@ -88,7 +91,8 @@ const Hero = () => {
               width={380}
               height={480}
               priority
-              className="rounded-[1.4rem] object-cover"
+              sizes="(max-width: 640px) 260px, 380px"
+              className="h-auto w-full rounded-[1.4rem] object-cover"
             />
           </div>
         </Reveal>

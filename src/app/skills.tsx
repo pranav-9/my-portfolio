@@ -52,7 +52,7 @@ const Skills = () => {
   return (
     <section
       id="skills"
-      className="bg-gradient-to-b from-brand-surface to-brand-surface-alt px-6 py-24 sm:py-32"
+      className="bg-gradient-to-b from-brand-surface to-brand-surface-alt px-6 py-16 sm:py-32"
     >
       <SectionHeader sectionDetails={sectionDetails} />
 

@@ -107,7 +107,7 @@ const TimeLine = () => {
   return (
     <section
       id="experience"
-      className="bg-gradient-to-b from-brand-surface-alt to-brand-surface px-6 py-24 sm:py-32"
+      className="bg-gradient-to-b from-brand-surface-alt to-brand-surface px-6 py-16 sm:py-32"
     >
       <SectionHeader sectionDetails={sectionDetails} />
 
