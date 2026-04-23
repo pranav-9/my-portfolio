@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">
+  <rect width="1600" height="900" fill="#f8f8f8"/>
+
+  <line x1="800" y1="120" x2="800" y2="780" stroke="#e9ebee" stroke-width="1" stroke-dasharray="4 8"/>
+
+  <text x="800" y="80" text-anchor="middle" font-family="ui-monospace, Menlo, monospace" font-size="22" font-weight="600" fill="#6b7280" letter-spacing="4">EASY LEADS · WHATSAPP QUALIFICATION</text>
+
+  <g transform="translate(140, 160)">
+    <rect width="540" height="110" rx="24" fill="#ffffff" stroke="#e9ebee" stroke-width="1.5"/>
+    <text x="40" y="58" font-family="ui-monospace, Menlo, monospace" font-size="28" fill="#0a0a0a">Hi! Looking for a quote.</text>
+    <text x="40" y="92" font-family="ui-monospace, Menlo, monospace" font-size="18" fill="#6b7280">— inbound · 10:42</text>
+  </g>
+
+  <g transform="translate(920, 310)">
+    <g transform="translate(-24, -24)">
+      <rect width="56" height="56" rx="28" fill="#355794"/>
+      <text x="28" y="38" text-anchor="middle" font-family="ui-monospace, Menlo, monospace" font-size="22" font-weight="700" fill="#ffffff">AI</text>
+    </g>
+    <rect width="540" height="110" rx="24" fill="#0a0a0a"/>
+    <text x="40" y="58" font-family="ui-monospace, Menlo, monospace" font-size="28" fill="#ffffff">What&#39;s your monthly volume?</text>
+    <text x="40" y="92" font-family="ui-monospace, Menlo, monospace" font-size="18" fill="#9ca3af">— qualify · 10:42</text>
+  </g>
+
+  <g transform="translate(140, 460)">
+    <rect width="440" height="110" rx="24" fill="#ffffff" stroke="#e9ebee" stroke-width="1.5"/>
+    <text x="40" y="58" font-family="ui-monospace, Menlo, monospace" font-size="28" fill="#0a0a0a">~500 units / month.</text>
+    <text x="40" y="92" font-family="ui-monospace, Menlo, monospace" font-size="18" fill="#6b7280">— inbound · 10:43</text>
+  </g>
+
+  <g transform="translate(920, 610)">
+    <g transform="translate(-24, -24)">
+      <rect width="56" height="56" rx="28" fill="#355794"/>
+      <text x="28" y="38" text-anchor="middle" font-family="ui-monospace, Menlo, monospace" font-size="22" font-weight="700" fill="#ffffff">AI</text>
+    </g>
+    <rect width="540" height="110" rx="24" fill="#0a0a0a"/>
+    <text x="40" y="58" font-family="ui-monospace, Menlo, monospace" font-size="28" fill="#ffffff">Connecting you to sales →</text>
+    <text x="40" y="92" font-family="ui-monospace, Menlo, monospace" font-size="18" fill="#9ca3af">— route · 10:43</text>
+  </g>
+
+  <g transform="translate(140, 800)">
+    <rect width="1320" height="64" rx="16" fill="#eef2f9"/>
+    <circle cx="40" cy="32" r="6" fill="#355794"/>
+    <text x="64" y="40" font-family="ui-monospace, Menlo, monospace" font-size="20" font-weight="600" fill="#355794" letter-spacing="3">LEAD QUALIFIED · SALES SCRIPT GENERATED · ROUTED</text>
+  </g>
+</svg>

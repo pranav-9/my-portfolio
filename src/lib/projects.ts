@@ -127,9 +127,9 @@ export const projects: Project[] = [
     description:
       "WhatsApp-native lead qualification engine. Qualifies, adapts, hands off — with an auto-generated sales script.",
     impact: "Replaces the SDR top of funnel.",
-    imageUrl: "/nodejs.png",
+    imageUrl: "/easy-leads.svg",
     stack: ["NestJS", "OpenAI", "WhatsApp Business API", "Botpress", "Webhooks"],
-    website: "#",
+    website: "https://github.com/pranav-9/easy-leads-ai",
   },
 ];
 

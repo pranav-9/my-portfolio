@@ -13,13 +13,13 @@ const ProjectCarousel = (props: { projectDetails: ProjectDetails }) => {
 
   const inner = (
     <>
-      <div className="relative aspect-[16/10] overflow-hidden bg-brand-surface-alt">
+      <div className="relative aspect-[16/9] overflow-hidden bg-brand-surface-alt">
         <Image
           src={p.imageUrl}
           alt={`${p.title} — project screenshot`}
           fill
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-          className="object-cover transition duration-500 group-hover:scale-[1.03]"
+          className="object-cover object-left transition duration-500 group-hover:scale-[1.03]"
         />
         <div className="absolute right-3 top-3 rounded-full bg-white/90 p-2 opacity-0 backdrop-blur transition group-hover:opacity-100">
           <ArrowUpRight size={16} className="text-brand-ink" />

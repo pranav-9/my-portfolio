@@ -95,13 +95,13 @@ export default async function ProjectPage(
         <div className="mx-auto max-w-5xl px-6 pb-20 sm:pb-24">
           <Reveal>
             <div className="overflow-hidden rounded-3xl border border-brand-divider bg-white shadow-[0_30px_80px_-30px_rgba(53,87,148,0.35)]">
-              <div className="relative aspect-[16/10]">
+              <div className="relative aspect-[16/9]">
                 <Image
                   src={project.imageUrl}
                   alt={`${project.title} — screenshot`}
                   fill
                   sizes="(max-width: 1024px) 100vw, 1024px"
-                  className="object-cover"
+                  className="object-cover object-left-top"
                   priority
                 />
               </div>
