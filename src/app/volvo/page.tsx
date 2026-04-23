@@ -12,21 +12,20 @@ type Strength = {
   title: string;
   punch: string;
   pills: string[];
+  caseStudyHref?: string;
 };
 
 const strengths: Strength[] = [
   {
     title: "Production conversational AI",
     punch:
-      "Easy Leads: a WhatsApp chatbot in production. The shape of a service-booking bot is the same shape.",
+      "Easy Leads runs inbound WhatsApp qualification in production — same chat primitives (intent → slot-fill → handoff) a service-booking bot needs.",
     pills: [
       "NestJS",
       "OpenAI",
       "MongoDB",
       "Meta webhooks",
       "Intent classification",
-      "Lead scoring",
-      "Human handoff",
     ],
   },
   {
@@ -39,20 +38,19 @@ const strengths: Strength[] = [
       "Gemini Files API",
       "Normalizers",
       "Deterministic scoring",
-      "Output verification",
     ],
+    caseStudyHref: "/projects/concall-alpha",
   },
   {
     title: "API integration depth",
-    punch: "Booking-API integration is my unglamorous specialty.",
+    punch:
+      "The unglamorous half of booking APIs — idempotency, retries, token refresh, partial failures — is where I actually spend time.",
     pills: [
       "NHTSA vPIC",
       "Zoho CRM",
-      "Stripe",
+      "HubSpot",
+      "OpenAI",
       "WhatsApp Cloud",
-      "Webhooks",
-      "OAuth refresh",
-      "Idempotency",
     ],
   },
 ];
@@ -68,30 +66,34 @@ type Gap = {
 
 const gaps: Gap[] = [
   {
-    gap: "Azure OpenAI / AI Search",
+    gap: "Azure stack experience",
     severity: "amber",
-    close: "Same API, Microsoft auth. A platform ramp, not a skill gap.",
+    close:
+      "Azure OpenAI is a near-drop-in for OpenAI. Azure AI Search is the genuine learning — a week of docs and a weekend build.",
     pills: ["OpenAI API", "Gemini API", "Vercel", "AWS"],
   },
   {
     gap: "Production RAG (vector store)",
     severity: "amber",
     close:
-      "Doc-grounded LLM work shipped twice. Assembly with a vector index — last mile, not a new discipline.",
-    pills: ["Concallyser ✓", "RM&C underwriting ✓", "Schema-first extraction"],
+      "Doc-grounded LLM work shipped twice (Concallyser and RM&C underwriting). The vector-store + reranker layer is the wiring I'd add — the schema and eval discipline around it is already how I work.",
+    pills: ["Vector stores", "Rerankers", "Hybrid search"],
   },
   {
-    gap: "Automotive / manufacturing industry",
+    gap: "Industry experience",
     severity: "green",
     close:
-      "Booking flows, slot-filling, intent — same across asset classes. A week of reading, not a career pivot.",
+      "Chat primitives (booking, slot-fill, intent) are portable across domains. The Volvo-specific surface — service codes, VIN data, dealer network, manufacturing constraints — is learn-on-the-job.",
     pills: ["Booking flows", "Slot-filling", "Intent classification"],
   },
 ];
 
 const severityBadge: Record<Severity, { label: string; className: string }> = {
   green: { label: "Green", className: "badge badge-soft badge-success" },
-  amber: { label: "Amber", className: "badge badge-soft badge-warning" },
+  amber: {
+    label: "Amber",
+    className: "badge badge-soft badge-warning text-amber-900",
+  },
 };
 
 type IndexCard = {
@@ -181,7 +183,7 @@ const tiers: ArchTier[] = [
     ],
   },
   {
-    label: "Cross-cutting · spans all tiers",
+    label: "5 · Cross-cutting",
     nodes: [
       {
         title: "State",
@@ -422,43 +424,54 @@ const VolvoFitPage = () => {
       {/* Section 1 — Fit matrix */}
       <section
         id="fit-matrix"
-        className="scroll-mt-8 bg-gradient-to-b from-brand-surface to-brand-surface-alt px-6 py-24 sm:py-32"
+        className="scroll-mt-8 bg-gradient-to-b from-brand-surface to-brand-surface-alt px-6 py-12 sm:py-16"
       >
         <SectionHeader
+          compact
           sectionDetails={{
             kicker: "Section 1",
             title: "Fit matrix",
-            subtitle:
-              "Three strengths. Three stretches. Each with a severity flag.",
+            subtitle: "Strengths and stretches, at a glance.",
           }}
         />
 
-        <div className="mx-auto flex max-w-6xl flex-col gap-16">
+        <div className="mx-auto flex max-w-6xl flex-col gap-6">
           {/* Strengths */}
-          <div className="flex flex-col gap-6">
+          <div className="flex flex-col gap-3">
             <Reveal>
-              <h3 className="text-2xl font-semibold tracking-tight text-brand-ink sm:text-3xl">
-                Where I&apos;m a strong fit
-              </h3>
+              <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-brand-muted">
+                Strong fit
+              </p>
             </Reveal>
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
               {strengths.map((s, idx) => (
                 <Reveal key={s.title} delay={idx * 80}>
-                  <div className="flex h-full flex-col gap-4 rounded-2xl border border-brand-divider bg-brand-tint p-6 transition hover:-translate-y-0.5 hover:border-brand-accent hover:shadow-[0_20px_50px_-20px_rgba(53,87,148,0.25)]">
-                    <span className="font-mono text-3xl font-semibold text-brand-accent">
-                      {String(idx + 1).padStart(2, "0")}
-                    </span>
-                    <h4 className="text-lg font-semibold text-brand-ink sm:text-xl">
-                      {s.title}
-                    </h4>
-                    <p className="text-sm leading-relaxed text-brand-muted">
+                  <div className="flex h-full flex-col gap-2.5 rounded-xl border border-brand-divider bg-brand-tint p-4 transition hover:-translate-y-0.5 hover:border-brand-accent hover:shadow-[0_20px_50px_-20px_rgba(53,87,148,0.25)] sm:p-5">
+                    <div className="flex items-baseline gap-2">
+                      <span className="font-mono text-lg font-semibold text-brand-accent">
+                        {String(idx + 1).padStart(2, "0")}
+                      </span>
+                      <h4 className="text-base font-semibold text-brand-ink sm:text-lg">
+                        {s.title}
+                      </h4>
+                    </div>
+                    <p className="text-[13px] leading-snug text-brand-muted">
                       {s.punch}
                     </p>
-                    <div className="mt-auto flex flex-wrap gap-1.5 pt-2">
+                    {s.caseStudyHref && (
+                      <a
+                        href={s.caseStudyHref}
+                        className="inline-flex w-fit items-center gap-1 text-[12px] font-medium text-brand-ink underline decoration-brand-ink/30 decoration-1 underline-offset-4 transition hover:decoration-brand-ink"
+                      >
+                        Read the case study
+                        <span aria-hidden>→</span>
+                      </a>
+                    )}
+                    <div className="mt-auto flex flex-wrap gap-1 pt-1">
                       {s.pills.map((p) => (
                         <span
                           key={p}
-                          className="badge badge-soft badge-info p-2 font-mono text-xs"
+                          className="badge badge-soft badge-success px-1.5 py-0.5 font-mono text-[10px]"
                         >
                           {p}
                         </span>
@@ -471,30 +484,37 @@ const VolvoFitPage = () => {
           </div>
 
           {/* Stretches */}
-          <div className="flex flex-col gap-6">
+          <div className="flex flex-col gap-3">
             <Reveal>
-              <h3 className="text-2xl font-semibold tracking-tight text-brand-ink sm:text-3xl">
-                Where I&apos;m a stretch
-              </h3>
+              <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-brand-muted">
+                Stretch
+              </p>
             </Reveal>
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
               {gaps.map((g, idx) => (
                 <Reveal key={g.gap} delay={idx * 80}>
-                  <div className="flex h-full flex-col gap-4 rounded-2xl border border-brand-divider bg-white p-6 transition hover:-translate-y-0.5 hover:border-brand-accent hover:shadow-[0_20px_50px_-20px_rgba(53,87,148,0.25)]">
-                    <span className={severityBadge[g.severity].className}>
-                      {severityBadge[g.severity].label}
-                    </span>
-                    <h4 className="text-lg font-semibold text-brand-ink sm:text-xl">
-                      {g.gap}
-                    </h4>
-                    <p className="text-sm leading-relaxed text-brand-muted">
+                  <div className="flex h-full flex-col gap-2.5 rounded-xl border border-brand-divider bg-white p-4 transition hover:-translate-y-0.5 hover:border-brand-accent hover:shadow-[0_20px_50px_-20px_rgba(53,87,148,0.25)] sm:p-5">
+                    <div className="flex flex-col gap-1.5">
+                      <h4 className="text-base font-semibold text-brand-ink sm:text-lg">
+                        {g.gap}
+                      </h4>
+                      <div className="flex items-center gap-1.5">
+                        <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-brand-muted">
+                          Severity:
+                        </span>
+                        <span className={severityBadge[g.severity].className}>
+                          {severityBadge[g.severity].label}
+                        </span>
+                      </div>
+                    </div>
+                    <p className="text-[13px] leading-snug text-brand-muted">
                       {g.close}
                     </p>
-                    <div className="mt-auto flex flex-wrap gap-1.5 pt-2">
+                    <div className="mt-auto flex flex-wrap gap-1 pt-1">
                       {g.pills.map((p) => (
                         <span
                           key={p}
-                          className="badge badge-soft badge-neutral p-2 font-mono text-xs"
+                          className="badge badge-soft badge-neutral px-1.5 py-0.5 font-mono text-[10px]"
                         >
                           {p}
                         </span>
@@ -511,18 +531,18 @@ const VolvoFitPage = () => {
       {/* Section 2 — Solution sketch */}
       <section
         id="solution"
-        className="scroll-mt-8 bg-gradient-to-b from-brand-surface-alt to-brand-surface px-6 py-24 sm:py-32"
+        className="scroll-mt-8 bg-gradient-to-b from-brand-surface-alt to-brand-surface px-6 py-12 sm:py-16"
       >
         <SectionHeader
+          compact
           sectionDetails={{
             kicker: "Section 2",
-            title: "How I'd architect the chatbot",
-            subtitle:
-              "Rough target architecture. Grounded-by-default, action by deterministic code.",
+            title: "A sketch of the chatbot architecture",
+            subtitle: "Chat + RAG + tool-using.",
           }}
         />
 
-        <div className="mx-auto flex max-w-6xl flex-col gap-16">
+        <div className="mx-auto flex max-w-6xl flex-col gap-8">
           {/* Architecture diagram */}
           <Reveal>
             <div className="flex flex-col gap-3 rounded-2xl border border-brand-divider bg-brand-tint p-4 sm:p-6">
@@ -586,34 +606,19 @@ const VolvoFitPage = () => {
       {/* Section 3 — Production health check */}
       <section
         id="onboarding"
-        className="scroll-mt-8 bg-gradient-to-b from-brand-surface to-brand-surface-alt px-6 py-24 sm:py-32"
+        className="scroll-mt-8 bg-gradient-to-b from-brand-surface to-brand-surface-alt px-6 py-12 sm:py-16"
       >
         <SectionHeader
+          compact
           sectionDetails={{
             kicker: "Section 3",
             title: "Production health check",
             subtitle:
-              "The checklist I'd walk through in my first week — four lenses, one critical item per lens.",
+              "What I'd walk through in my first week to find where I can plug in — not a verdict on what the team has built.",
           }}
         />
 
-        <div className="mx-auto flex max-w-6xl flex-col gap-12">
-          {/* Framing */}
-          <Reveal>
-            <div className="rounded-r-lg border-l-4 border-brand-accent bg-brand-accent-soft px-5 py-4">
-              <p className="text-sm leading-relaxed text-brand-ink sm:text-base">
-                This is the checklist I&apos;d walk through in my first week
-                to get oriented — not an assessment of what the team has
-                built. Half of these items are probably already handled and I
-                just don&apos;t know it yet.{" "}
-                <span className="text-brand-muted">
-                  The goal is to find where the real gaps are and where I can
-                  plug in, not to arrive with a verdict.
-                </span>
-              </p>
-            </div>
-          </Reveal>
-
+        <div className="mx-auto flex max-w-6xl flex-col gap-8">
           {/* 2x2 quadrant grid */}
           <div className="grid gap-4 lg:grid-cols-2">
             {quadrants.map((q, idx) => {
