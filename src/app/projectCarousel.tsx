@@ -1,17 +1,18 @@
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 import { ArrowUpRight } from "lucide-react";
 import type { ProjectDetails } from "./project";
 
 const ProjectCarousel = (props: { projectDetails: ProjectDetails }) => {
   const p = props.projectDetails;
-  return (
-    <a
-      href={p.website}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="group flex h-full flex-col overflow-hidden rounded-3xl border border-brand-divider bg-white transition duration-300 hover:-translate-y-1 hover:border-brand-ink hover:shadow-[0_30px_80px_-30px_rgba(53,87,148,0.35)]"
-    >
+  const hasCaseStudy = Boolean(p.caseStudy);
+
+  const cardClass =
+    "group flex h-full flex-col overflow-hidden rounded-3xl border border-brand-divider bg-white transition duration-300 hover:-translate-y-1 hover:border-brand-ink hover:shadow-[0_30px_80px_-30px_rgba(53,87,148,0.35)]";
+
+  const inner = (
+    <>
       <div className="relative aspect-[16/10] overflow-hidden bg-brand-surface-alt">
         <Image
           src={p.imageUrl}
@@ -51,7 +52,32 @@ const ProjectCarousel = (props: { projectDetails: ProjectDetails }) => {
             </span>
           ))}
         </div>
+
+        {hasCaseStudy && (
+          <p className="font-mono text-[10px] uppercase tracking-wider text-brand-accent">
+            Read case study →
+          </p>
+        )}
       </div>
+    </>
+  );
+
+  if (hasCaseStudy) {
+    return (
+      <Link href={`/projects/${p.slug}`} className={cardClass}>
+        {inner}
+      </Link>
+    );
+  }
+
+  return (
+    <a
+      href={p.website}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={cardClass}
+    >
+      {inner}
     </a>
   );
 };

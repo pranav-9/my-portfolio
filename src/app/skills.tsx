@@ -21,7 +21,7 @@ const Skills = () => {
       title: "AI in production",
       claim:
         "Provider-pluggable LLM pipelines. JSON-contracted, output-verified.",
-      proof: ["RM&C", "Easy Leads", "Concall Alpha", "On The Move"],
+      proof: ["RM&C", "Easy Leads", "Concall Alpha AI", "On The Move"],
     },
     {
       title: "Service & API integrations",
