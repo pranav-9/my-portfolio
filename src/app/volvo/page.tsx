@@ -396,7 +396,7 @@ const VolvoFitPage = () => {
               </h1>
             </Reveal>
             <Reveal delay={160}>
-              <p className="max-w-2xl font-mono text-sm leading-relaxed text-brand-muted sm:text-base">
+              <p className="max-w-2xl text-base leading-relaxed text-brand-muted sm:text-lg">
                 Prepared so our conversation can focus on the project itself.
                 Jump in anywhere.
               </p>
@@ -430,7 +430,7 @@ const VolvoFitPage = () => {
                   <h3 className="text-xl font-semibold tracking-tight text-brand-ink sm:text-2xl">
                     {card.title}
                   </h3>
-                  <p className="font-mono text-sm leading-relaxed text-brand-muted">
+                  <p className="text-sm leading-relaxed text-brand-muted">
                     {card.preview}
                   </p>
                   <div className="mt-auto flex flex-wrap gap-1.5 pt-2">
@@ -482,7 +482,7 @@ const VolvoFitPage = () => {
                     <h4 className="text-lg font-semibold text-brand-ink sm:text-xl">
                       {s.title}
                     </h4>
-                    <p className="font-mono text-sm leading-relaxed text-brand-muted">
+                    <p className="text-sm leading-relaxed text-brand-muted">
                       {s.punch}
                     </p>
                     <div className="mt-auto flex flex-wrap gap-1.5 pt-2">
@@ -518,7 +518,7 @@ const VolvoFitPage = () => {
                     <h4 className="text-lg font-semibold text-brand-ink sm:text-xl">
                       {g.gap}
                     </h4>
-                    <p className="font-mono text-sm leading-relaxed text-brand-muted">
+                    <p className="text-sm leading-relaxed text-brand-muted">
                       {g.close}
                     </p>
                     <div className="mt-auto flex flex-wrap gap-1.5 pt-2">
@@ -596,12 +596,12 @@ const VolvoFitPage = () => {
 
               {/* Critical loop callout */}
               <div className="mt-2 rounded-r-lg border-l-4 border-brand-accent bg-brand-accent-soft px-4 py-2.5">
-                <p className="font-mono text-[11px] leading-snug text-brand-ink sm:text-xs">
+                <p className="text-[12px] leading-snug text-brand-ink sm:text-sm">
                   <span className="font-semibold text-brand-accent">
                     Critical loop:{" "}
                   </span>
                   LLM proposes typed{" "}
-                  <code className="rounded border border-brand-accent/30 bg-brand-surface px-1 py-0.5 text-[10px]">
+                  <code className="rounded border border-brand-accent/30 bg-brand-surface px-1 py-0.5 font-mono text-[10px]">
                     proposed_booking
                   </code>{" "}
                   · user confirms · code executes with idempotency key. The
@@ -632,7 +632,7 @@ const VolvoFitPage = () => {
           {/* Framing */}
           <Reveal>
             <div className="rounded-r-lg border-l-4 border-brand-accent bg-brand-accent-soft px-5 py-4">
-              <p className="font-mono text-sm leading-relaxed text-brand-ink">
+              <p className="text-sm leading-relaxed text-brand-ink sm:text-base">
                 This is the checklist I&apos;d walk through in my first week
                 to get oriented — not an assessment of what the team has
                 built. Half of these items are probably already handled and I
@@ -661,7 +661,7 @@ const VolvoFitPage = () => {
                         {q.heading}
                       </h3>
                       <p
-                        className={`mt-1 border-b pb-4 font-mono text-xs italic text-brand-muted ${style.question}`}
+                        className={`mt-1 border-b pb-4 text-sm italic text-brand-muted ${style.question}`}
                       >
                         {q.question}
                       </p>
@@ -687,7 +687,7 @@ const VolvoFitPage = () => {
                                 </span>
                               )}
                             </div>
-                            <p className="font-mono text-[13px] leading-snug text-brand-muted">
+                            <p className="text-[13px] leading-snug text-brand-muted">
                               {item.desc}
                             </p>
                           </div>
@@ -713,7 +713,7 @@ const VolvoFitPage = () => {
                   {probes.map((p) => (
                     <li
                       key={p.title}
-                      className="flex gap-3 font-mono text-sm leading-relaxed text-brand-muted"
+                      className="flex gap-3 text-sm leading-relaxed text-brand-muted"
                     >
                       <span className="mt-1 text-brand-accent">·</span>
                       <p>
@@ -734,7 +734,7 @@ const VolvoFitPage = () => {
       {/* Closer */}
       <section className="bg-brand-surface-alt px-6 pb-20 pt-8">
         <Reveal>
-          <p className="mx-auto max-w-2xl text-center font-mono text-sm italic leading-relaxed text-brand-muted">
+          <p className="mx-auto max-w-2xl text-center text-sm italic leading-relaxed text-brand-muted sm:text-base">
             Happy to walk through any tier or diagnostic in detail.
           </p>
         </Reveal>
