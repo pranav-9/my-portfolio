@@ -53,6 +53,12 @@ const indexCards: IndexCard[] = [
     title: "Sync architecture",
     tag: "bidirectional, with sync-token",
   },
+  {
+    href: "#pushback",
+    marker: "07",
+    title: "Honest pushback",
+    tag: "what I'd cut · what I'd ask",
+  },
 ];
 
 type ProductStage = {
@@ -96,13 +102,8 @@ const stageStatusClass: Record<ProductStage["status"], string> = {
   next: "badge badge-soft badge-neutral",
 };
 
-const productPills: string[] = [
-  "Consumer-facing",
-  "Curated directory",
-  "Kids activities",
-  "Two-sided",
-  "Subscription monetization",
-];
+const productShapeNote =
+  "Two-sided directory, but the two sides never meet: parents don't auth, operators don't see parents. Discovery + click-out + lead-gen visibility is the entire value prop — no booking, no in-platform transactions.";
 
 type UserType = {
   who: string;
@@ -222,11 +223,10 @@ const featureGroups: FeatureGroup[] = [
         ],
       },
       {
-        label: "Performance & compliance",
+        label: "Performance targets",
         items: [
           "Lighthouse 90+ mobile · Core Web Vitals 'Good' · sub-2s on 4G",
-          "Cookie consent, 'Do Not Sell My Info', accessibility statement",
-          "WCAG 2.1 AA — automated Axe/Lighthouse + manual audit",
+          "Accessibility + privacy compliance handled in the cross-cutting layer",
         ],
       },
     ],
@@ -561,7 +561,6 @@ const featureGroups: FeatureGroup[] = [
           "Anti-fraud rate limiting on claim attempts + manual review queue",
           "Hidden URL honeypots (anti-scraper)",
           "Per-route rate limiting at the application layer",
-          "Idempotent API operations across the board",
         ],
       },
       {
@@ -684,93 +683,183 @@ const onvcDecisions: SearchDecision[] = [
   },
 ];
 
-type FoundraMap = {
-  from: string;
-  to: string;
+type SearchCompare = {
+  dimension: string;
+  onvc: string;
+  algolia: string;
 };
 
-const foundraMappings: FoundraMap[] = [
+const searchComparison: SearchCompare[] = [
   {
-    from: "Single Webflow dataset, hydrated client-side",
-    to: "Single Algolia listings_prod index, region_slug as filterOnly — multi-tenancy via filter, scales cleanly to 100+ markets",
+    dimension: "Dataset size ceiling",
+    onvc: "~5–10k items before payload + filter cost gets ugly",
+    algolia: "Effectively unlimited (millions+)",
   },
   {
-    from: "Manual sort by departure date",
-    to: "tier as customRanking signal — Founding > Premium > Tier 1 > unclaimed. Monetization signal lives inside ranking, not as post-process",
+    dimension: "Per-interaction latency",
+    onvc: "0 ms (in-memory)",
+    algolia: "20–100 ms (network round-trip)",
   },
   {
-    from: "6 facet dimensions, client-side filtering",
-    to: "attributesForFaceting: category (searchable), age range, indoor/outdoor, price tier, neighborhood",
+    dimension: "First-load cost",
+    onvc: "Heavier — ships full dataset in SSR HTML",
+    algolia: "Light — only ships shell + first results",
   },
   {
-    from: "Manual sort orders",
-    to: "Algolia replicas: listings_newest, listings_distance (geo), listings_alphabetical",
+    dimension: "Typo tolerance",
+    onvc: "None (“Carribean” matches nothing)",
+    algolia: "Built-in, tunable",
   },
   {
-    from: "Hard fail on zero results",
-    to: "Filter relaxation: drop in priority order (price → neighborhood → age → category). optionalFilters for soft constraints. Helpful copy: 'No exact matches for soccer for 13–17 in $-$ — here are 14 nearby.'",
+    dimension: "Relevance ranking",
+    onvc: "None — equality matches only",
+    algolia: "Tf-idf, custom ranking, business rules",
   },
   {
-    from: "Direct CMS reads",
-    to: "Sync direction: Postgres → Algolia only, on every change. Algolia never written from Airtable directly — failure isolation",
+    dimension: "Synonyms / aliases",
+    onvc: "Hand-coded normalize() helper",
+    algolia: "Synonym dictionaries in dashboard",
+  },
+  {
+    dimension: "Faceted counts",
+    onvc: "Recomputed on every render in JS",
+    algolia: "Returned by API in one call",
+  },
+  {
+    dimension: "Geo / numeric / sort tie-breakers",
+    onvc: "Hand-rolled per facet",
+    algolia: "Native",
+  },
+  {
+    dimension: "Analytics",
+    onvc: "None unless you wire it",
+    algolia:
+      "Click-through, conversion, no-result tracking out of the box",
+  },
+  {
+    dimension: "Cost",
+    onvc: "Cloudflare KV reads (cents/month)",
+    algolia: "$0.50 per 1k searches, ~$500/mo at modest scale",
+  },
+  {
+    dimension: "Vendor lock-in",
+    onvc: "None",
+    algolia: "High — your search becomes their schema",
+  },
+  {
+    dimension: "Data freshness",
+    onvc: "Up to 5-min lag on Webflow edits",
+    algolia: "Near-instant (push on write)",
+  },
+  {
+    dimension: "Offline / no-JS",
+    onvc: "Initial filters work via SSR URL params",
+    algolia: "Requires JS + network",
   },
 ];
 
-type SyncDirection = {
+type SolutionLayer = {
+  step: string;
   label: string;
-  steps: string[];
+  framing: string;
+  body: string;
 };
 
-const syncDirections: SyncDirection[] = [
+const solutionLayers: SolutionLayer[] = [
   {
-    label: "Direction 1 · Airtable → Postgres",
-    steps: [
-      "Airtable webhook fires on record change",
-      "Handler verifies HMAC signature",
-      "Idempotent upsert keyed by Airtable record ID",
-      "Idempotency key = record_id + revision + field_hash — deduplicates retries cleanly",
-      "On success → enqueue Algolia sync job",
-    ],
+    step: "01",
+    label: "Disjoint writers",
+    framing: "Design · eliminates ~99% of conflicts",
+    body: "Dashboard API only exposes operator-owned fields (description, photos, hours, programs, tags). Admins use an Airtable Interface that hides those same fields once claim_status = claimed. The two writers don't share a surface, so most conflicts never happen.",
   },
   {
-    label: "Direction 2 · Postgres → Airtable",
-    steps: [
-      "Operator saves in dashboard → Postgres write",
-      "Worker fires Airtable API PATCH with a UUID sync-token in a metadata field on the record",
-      "Inbound handler recognizes its own echo via that token and short-circuits — zero re-write loop, no state machine needed",
-    ],
+    step: "02",
+    label: "Claim-aware sync guard",
+    framing: "Safety net · for the rare admin override",
+    body: "Inbound webhook handler checks claim_status. If an admin wrote an operator-owned field on a claimed listing, the change is not auto-applied — it's parked in a conflict queue (Postgres table + Ops panel UI) with a diff and admin attribution. Admin reviews and either applies (operator gets notified) or discards. The operator's dashboard stays correct in the meantime.",
+  },
+  {
+    step: "03",
+    label: "OCC on dashboard save",
+    framing: "Last line · for residual concurrent edits",
+    body: "Dashboard captures the record's revision on load. On save, that token goes back to the API. If Postgres's revision is higher (admin force-applied a conflict-queue item between load and save), the save returns 409 → operator sees 'Foundra team updated this 2 min ago. Review their change before saving.' No silent overwrites.",
   },
 ];
 
-const reliabilityPrimitives: string[] = [
-  "Exponential-backoff retry — 3 attempts at 1s / 5s / 30s",
-  "Dead-letter queue: Postgres table + admin review surface in the Ops panel",
-  "Nightly full-scan reconciliation as the backstop — scan Airtable, diff against Postgres, flag and replay deltas",
-];
-
-type FieldOwnership = {
-  surface: string;
-  fields: string[];
-  writers: string;
-};
-
-const ownership: FieldOwnership[] = [
+const webhookSolutionLayers: SolutionLayer[] = [
   {
-    surface: "Pipeline-owned",
-    fields: [
-      "address",
-      "lat / lng",
-      "categories",
-      "region",
-      "claim status",
-      "moderation flags",
-    ],
-    writers: "Only the Airtable sync path writes these",
+    step: "01",
+    label: "Intake decoupling",
+    framing: "Acknowledge fast, process slow",
+    body: "Webhook handler verifies the HMAC signature, persists the raw payload + idempotency key (record_id + revision + field_hash) to a Postgres inbound_events table, and returns 200. Airtable gets a sub-100ms ack; no business logic runs on the request thread, so a slow downstream can never time the handler out.",
   },
   {
-    surface: "Operator-owned",
-    fields: ["description", "photos", "hours", "programs", "tags"],
-    writers: "Only the dashboard write path writes these",
+    step: "02",
+    label: "Idempotent worker + DLQ",
+    framing: "Retry on transient, park on permanent",
+    body: "Worker drains inbound_events. Skips events whose idempotency key is already marked complete (duplicate-safe). Skips events whose revision is older than current Postgres state (out-of-order-safe). Transient failures retry with exponential backoff (1s / 5s / 30s); after that they land in dead_letter with admin review in the Ops panel.",
+  },
+  {
+    step: "03",
+    label: "Nightly reconciliation",
+    framing: "Backstop for silent drops",
+    body: "Cron job scans every Airtable record, diffs against Postgres, flags any divergence and replays the delta. Catches the cases retries can't see — Airtable subscription dropped, our endpoint was down during the burst, a payload shape we couldn't parse — so the system always converges, even after an outage.",
+  },
+];
+
+type CutItem = {
+  label: string;
+  rationale: string;
+  payoff: string;
+};
+
+const cutItems: CutItem[] = [
+  {
+    label: "Phase 6 audit artifacts",
+    rationale:
+      "OWASP versioned checklist, manual WCAG 2.1 AA audit, DR runbook polish, independent security review remediation. Real deliverables that take real time — and the brief itself mentions a 30–60 day post-launch window.",
+    payoff: "Phases 0–4 + most of 5 fit 8 weeks cleanly · audits land in post-launch window",
+  },
+  {
+    label: "Ops panel ≠ custom CMS",
+    rationale:
+      "Phase 5 reads like 'build an admin CMS,' but Airtable already is the editorial workspace — Haley's team lives there. The Ops panel is a thin operational layer for what Airtable can't do: claim approval, DSAR + erasure, audit viewer, impersonation, honeypots.",
+    payoff: "~30–40% of implied admin scope removed without losing capability",
+  },
+  {
+    label: "Structured schedules → v2",
+    rationale:
+      "Free-text schedules per program (e.g. 'Tuesdays 4–5pm, Sept–Dec') ship in v1. Structured RRULE data + schedule-aware Algolia indexing + calendar UI moves to v2 unless parents need 'Saturday morning' as a primary search axis on day one.",
+    payoff: "1–2 weeks reclaimed · revisit when post-launch usage shows the need",
+  },
+];
+
+type OpenQuestion = {
+  q: string;
+  why: string;
+  impact: string;
+};
+
+const openQuestions: OpenQuestion[] = [
+  {
+    q: "Listing granularity — business or program?",
+    why: "Working assumption: business-level with programs as a nested free-text structure (fits the 600–1,200 count and the curated framing).",
+    impact: "If program-level: Algolia indexes programs not businesses · 5–10× more records · schedule-aware faceting",
+  },
+  {
+    q: "Region structure — path or subdomain?",
+    why: "Recommendation: path-based with a single Algolia index using region_slug as a filter. Much simpler to operate at 100 markets.",
+    impact: "If subdomain: Vercel multi-domain routing · per-region sitemaps · harder cross-region analytics",
+  },
+  {
+    q: "Write authority — dashboard-only?",
+    why: "Is the operator dashboard the only place that writes back operator-owned fields, or does the admin team also edit those directly in Airtable?",
+    impact: "Decides whether last-write-wins is theoretical (clean field ownership) or load-bearing (real conflict resolution required)",
+  },
+  {
+    q: "Schedule depth — v1 or v2?",
+    why: "Free-text on the listing page, or structured recurring schedules with timezones and exceptions that parents can filter on?",
+    impact: "Structured adds 1–2 weeks of v1 work · the cut item above assumes free-text",
   },
 ];
 
@@ -902,11 +991,27 @@ const FoundraFitPage = () => {
                       <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-brand-muted">
                         Stage {s.stage}
                       </span>
-                      <span
-                        className={`${stageStatusClass[s.status]} px-2 py-0.5 font-mono text-[10px]`}
-                      >
-                        {s.statusLabel}
-                      </span>
+                      <div className="flex items-center gap-1.5">
+                        {isBuild && (
+                          <span
+                            className="badge badge-soft badge-warning px-2 py-0.5 font-mono text-[10px]"
+                            title="Client's own framing in the brief: 'The 8-week target is aggressive given full scope.'"
+                          >
+                            Aggressive
+                          </span>
+                        )}
+                        <span
+                          className={`${stageStatusClass[s.status]} inline-flex items-center gap-1.5 px-2 py-0.5 font-mono text-[10px]`}
+                        >
+                          {isBuild && (
+                            <span
+                              className="inline-block h-1.5 w-1.5 rounded-full bg-info motion-safe:animate-pulse"
+                              aria-hidden
+                            />
+                          )}
+                          {s.statusLabel}
+                        </span>
+                      </div>
                     </div>
                     <p
                       className={`font-mono text-xl font-semibold tracking-tight sm:text-2xl ${
@@ -918,6 +1023,12 @@ const FoundraFitPage = () => {
                     <p className="text-[13px] leading-snug text-brand-muted sm:text-sm">
                       {s.caption}
                     </p>
+                    {isBuild && (
+                      <p className="font-mono text-[10px] italic leading-snug text-brand-muted">
+                        &ldquo;Aggressive given full scope; honest timeline
+                        pushback welcomed.&rdquo; — from the brief
+                      </p>
+                    )}
                   </div>
                 </Reveal>
               );
@@ -925,18 +1036,13 @@ const FoundraFitPage = () => {
           </div>
 
           <Reveal delay={240}>
-            <div className="flex flex-wrap items-center gap-2">
+            <div className="rounded-r-lg border-l-4 border-brand-divider bg-brand-tint px-4 py-3 sm:px-5">
               <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-brand-muted">
                 Product shape
               </p>
-              {productPills.map((p) => (
-                <span
-                  key={p}
-                  className="badge badge-soft badge-neutral px-3 py-2 font-mono text-[11px]"
-                >
-                  {p}
-                </span>
-              ))}
+              <p className="mt-1 text-[13px] leading-snug text-brand-ink sm:text-sm">
+                {productShapeNote}
+              </p>
             </div>
           </Reveal>
         </div>
@@ -1232,67 +1338,101 @@ const FoundraFitPage = () => {
           <div className="flex flex-col gap-3">
             <Reveal>
               <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-brand-muted">
-                Mapped to Foundra
+                Direct comparison · ONVC&apos;s approach vs Algolia
               </p>
             </Reveal>
             <Reveal delay={80}>
               <div className="overflow-hidden rounded-2xl border border-brand-divider bg-brand-surface">
-                <div className="grid grid-cols-1 divide-y divide-brand-divider sm:grid-cols-[1fr_auto_2fr] sm:divide-x sm:divide-y-0">
-                  <div className="bg-brand-tint px-4 py-2 sm:px-5">
+                <div className="grid grid-cols-1 divide-y divide-brand-divider bg-brand-tint sm:grid-cols-[1.2fr_2fr_2fr] sm:divide-x sm:divide-y-0">
+                  <div className="px-4 py-2 sm:px-5">
                     <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-brand-muted">
-                      From ONVC
+                      Dimension
                     </p>
                   </div>
-                  <div
-                    className="hidden bg-brand-tint sm:block"
-                    aria-hidden
-                  />
-                  <div className="bg-brand-tint px-4 py-2 sm:px-5">
+                  <div className="px-4 py-2 sm:px-5">
+                    <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-brand-muted">
+                      ONVC&apos;s approach
+                    </p>
+                  </div>
+                  <div className="px-4 py-2 sm:px-5">
                     <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-brand-accent">
-                      To Foundra
+                      Algolia
                     </p>
                   </div>
                 </div>
                 <ul className="flex flex-col divide-y divide-brand-divider">
-                  {foundraMappings.map((m) => (
+                  {searchComparison.slice(0, 5).map((c) => (
                     <li
-                      key={m.from}
-                      className="grid grid-cols-1 gap-2 px-4 py-3 sm:grid-cols-[1fr_auto_2fr] sm:gap-4 sm:px-5"
+                      key={c.dimension}
+                      className="grid grid-cols-1 gap-1.5 px-4 py-2.5 sm:grid-cols-[1.2fr_2fr_2fr] sm:gap-4 sm:px-5"
                     >
-                      <p className="text-[13px] leading-snug text-brand-muted">
-                        {m.from}
+                      <p className="font-mono text-[11px] font-semibold text-brand-ink">
+                        {c.dimension}
                       </p>
-                      <span
-                        className="hidden self-center font-mono text-brand-accent sm:inline"
-                        aria-hidden
-                      >
-                        →
-                      </span>
-                      <p className="text-[13px] leading-snug text-brand-ink">
-                        {m.to}
+                      <p className="text-[12px] leading-snug text-brand-muted">
+                        {c.onvc}
+                      </p>
+                      <p className="text-[12px] leading-snug text-brand-ink">
+                        {c.algolia}
                       </p>
                     </li>
                   ))}
                 </ul>
+                <details className="group border-t border-brand-divider">
+                  <summary className="flex cursor-pointer list-none items-center justify-center gap-2 px-4 py-2.5 font-mono text-[10px] uppercase tracking-[0.18em] text-brand-accent transition-colors hover:bg-brand-tint sm:px-5 [&::-webkit-details-marker]:hidden">
+                    <span className="group-open:hidden">
+                      Show {searchComparison.length - 5} more dimensions ↓
+                    </span>
+                    <span className="hidden group-open:inline">
+                      Hide additional dimensions ↑
+                    </span>
+                  </summary>
+                  <ul className="flex flex-col divide-y divide-brand-divider border-t border-brand-divider">
+                    {searchComparison.slice(5).map((c) => (
+                      <li
+                        key={c.dimension}
+                        className="grid grid-cols-1 gap-1.5 px-4 py-2.5 sm:grid-cols-[1.2fr_2fr_2fr] sm:gap-4 sm:px-5"
+                      >
+                        <p className="font-mono text-[11px] font-semibold text-brand-ink">
+                          {c.dimension}
+                        </p>
+                        <p className="text-[12px] leading-snug text-brand-muted">
+                          {c.onvc}
+                        </p>
+                        <p className="text-[12px] leading-snug text-brand-ink">
+                          {c.algolia}
+                        </p>
+                      </li>
+                    ))}
+                  </ul>
+                </details>
               </div>
             </Reveal>
           </div>
 
-          <Reveal>
-            <div className="rounded-r-lg border-l-4 border-brand-accent bg-brand-accent-soft px-4 py-3">
+          <Reveal delay={160}>
+            <div className="rounded-r-lg border-l-4 border-brand-accent bg-brand-accent-soft px-4 py-3 sm:px-5">
               <p className="text-[13px] leading-snug text-brand-ink sm:text-sm">
                 <span className="font-semibold text-brand-accent">
-                  Honest framing:{" "}
+                  Foundra&apos;s call:{" "}
                 </span>
-                I&apos;ve shipped all the underlying patterns — faceting, filter
-                relaxation, multi-tenant filtering, URL-synced state, ranking —
-                at production scale. ONVC didn&apos;t need Algolia at that
-                record count, so I&apos;ve configured Algolia indices but
-                not owned one end-to-end. The index design + sync worker for
-                Foundra is day-one work — small ramp, not a gap.
+                600–1,200 listings at launch fits in-memory cleanly, but the
+                brief is 100+ markets — that&apos;s 60k–120k records at full
+                scale, past the ~5–10k ceiling I hit at ONVC. Algolia is the
+                right primitive on day one. What carries over from the ONVC
+                build: URL-synced filter state, filter relaxation on zero
+                results, deep-linkable facet combinations, and single-index
+                multi-tenancy (one{" "}
+                <code className="rounded bg-brand-surface px-1 py-0.5 font-mono text-[11px] text-brand-ink">
+                  listings_prod
+                </code>
+                , <code className="rounded bg-brand-surface px-1 py-0.5 font-mono text-[11px] text-brand-ink">region_slug</code> as a{" "}
+                <code className="rounded bg-brand-surface px-1 py-0.5 font-mono text-[11px] text-brand-ink">filterOnly</code> facet,
+                not index-per-region).
               </p>
             </div>
           </Reveal>
+
         </div>
       </section>
 
@@ -1360,139 +1500,231 @@ const FoundraFitPage = () => {
             </div>
           </Reveal>
 
-          {/* Directions */}
-          <div className="grid gap-4 lg:grid-cols-2">
-            {syncDirections.map((dir, idx) => (
-              <Reveal key={dir.label} delay={idx * 80}>
-                <div className="flex h-full flex-col gap-3 rounded-2xl border border-brand-divider bg-brand-surface p-5 sm:p-6">
-                  <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-brand-accent">
-                    {dir.label}
-                  </p>
-                  <ol className="flex flex-col gap-2">
-                    {dir.steps.map((s, sIdx) => (
-                      <li key={s} className="flex gap-3">
-                        <span className="mt-0.5 shrink-0 font-mono text-xs font-semibold text-brand-accent">
-                          {String(sIdx + 1).padStart(2, "0")}
-                        </span>
-                        <span className="text-[13px] leading-snug text-brand-ink">
-                          {s}
-                        </span>
-                      </li>
-                    ))}
-                  </ol>
-                </div>
-              </Reveal>
-            ))}
-          </div>
+          {/* Problem card 1 */}
+          <Reveal>
+            <div className="flex flex-col gap-3 rounded-2xl border border-brand-accent bg-brand-accent-soft p-5 sm:p-6">
+              <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-brand-accent">
+                The hard problem · 01
+              </p>
+              <h4 className="text-lg font-semibold text-brand-accent sm:text-xl">
+                The same-field race
+              </h4>
+              <p className="text-[13px] leading-relaxed text-brand-ink sm:text-sm">
+                Admin edits{" "}
+                <code className="rounded bg-brand-surface px-1 py-0.5 font-mono text-[11px] text-brand-ink">
+                  description
+                </code>{" "}
+                on a listing in Airtable at T₀. Operator edits the same field
+                in the dashboard at T₀+1s. Both round-trip through sync. Which
+                write wins, and does the loser even know they were
+                overwritten?
+              </p>
+              <p className="text-[12px] italic leading-snug text-brand-muted">
+                Most fields aren&apos;t at risk — pipeline-owned fields
+                (address, lat/lng, region, claim status) and operator-owned
+                fields (description, photos, hours, programs, tags) have
+                disjoint writers by design. The race only emerges when an
+                admin reaches into operator territory.
+              </p>
+            </div>
+          </Reveal>
 
-          {/* Reliability primitives + field ownership */}
-          <div className="grid gap-4 lg:grid-cols-[3fr_2fr]">
-            <Reveal>
-              <div className="flex h-full flex-col gap-3 rounded-2xl border border-brand-divider bg-brand-surface p-5 sm:p-6">
-                <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-brand-accent">
-                  Reliability primitives
-                </p>
-                <ul className="flex flex-col gap-2">
-                  {reliabilityPrimitives.map((p) => (
-                    <li key={p} className="flex gap-2">
-                      <span
-                        className="mt-1.5 inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-brand-accent"
-                        aria-hidden
-                      />
-                      <span className="text-[13px] leading-snug text-brand-ink">
-                        {p}
+          {/* Solution card 1 */}
+          <Reveal delay={80}>
+            <div className="flex flex-col gap-3 rounded-2xl border border-brand-divider bg-brand-surface p-5 sm:p-6">
+              <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-brand-muted">
+                Three-layer defense · field-level
+              </p>
+              <div className="grid gap-3 lg:grid-cols-3">
+                {solutionLayers.map((s) => (
+                  <div
+                    key={s.step}
+                    className="flex flex-col gap-2 rounded-lg border border-brand-divider bg-brand-tint p-4"
+                  >
+                    <div className="flex items-baseline gap-2">
+                      <span className="font-mono text-sm font-semibold text-brand-accent">
+                        {s.step}
                       </span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </Reveal>
-            <Reveal delay={80}>
-              <div className="flex h-full flex-col gap-3 rounded-2xl border border-brand-divider bg-brand-surface p-5 sm:p-6">
-                <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-brand-accent">
-                  Field ownership at the write layer
-                </p>
-                <p className="text-[12px] leading-snug text-brand-muted">
-                  The key idea: disjoint write paths, enforced at the API
-                  surface. No co-owned fields → no last-write-wins races to
-                  resolve at runtime.
-                </p>
-                <div className="flex flex-col gap-2">
-                  {ownership.map((o) => (
-                    <div
-                      key={o.surface}
-                      className="rounded-lg border border-brand-divider bg-brand-tint p-3"
-                    >
-                      <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-brand-accent">
-                        {o.surface}
-                      </p>
-                      <div className="mt-1.5 flex flex-wrap gap-1">
-                        {o.fields.map((f) => (
-                          <span
-                            key={f}
-                            className="badge badge-soft badge-neutral px-1.5 py-0.5 font-mono text-[10px]"
-                          >
-                            {f}
-                          </span>
-                        ))}
-                      </div>
-                      <p className="mt-2 text-[12px] italic leading-snug text-brand-muted">
-                        {o.writers}
-                      </p>
+                      <h5 className="text-[14px] font-semibold text-brand-ink">
+                        {s.label}
+                      </h5>
                     </div>
-                  ))}
-                </div>
+                    <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-brand-accent">
+                      {s.framing}
+                    </p>
+                    <p className="text-[12px] leading-snug text-brand-muted">
+                      {s.body}
+                    </p>
+                  </div>
+                ))}
               </div>
-            </Reveal>
-          </div>
+              <p className="font-mono text-[11px] italic leading-snug text-brand-muted">
+                Last-write-wins only applies to truly co-owned fields, which
+                the schema designs to be zero. Every write carries provenance
+                (actor, source, timestamp) for audit either way.
+              </p>
+            </div>
+          </Reveal>
 
-          {/* Scale + honest framing */}
-          <div className="grid gap-4 lg:grid-cols-2">
+          {/* Problem card 2 */}
+          <Reveal>
+            <div className="flex flex-col gap-3 rounded-2xl border border-brand-accent bg-brand-accent-soft p-5 sm:p-6">
+              <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-brand-accent">
+                The hard problem · 02
+              </p>
+              <h4 className="text-lg font-semibold text-brand-accent sm:text-xl">
+                The unreliable webhook
+              </h4>
+              <p className="text-[13px] leading-relaxed text-brand-ink sm:text-sm">
+                Airtable fires a webhook on every record change. Sometimes the
+                request times out. Sometimes the handler crashes mid-write and
+                Postgres ends up partially updated. Sometimes two events arrive
+                out of order. Occasionally the webhook just{" "}
+                <em>doesn&apos;t fire at all</em> — subscription dropped, our
+                endpoint was down during the burst, payload shape we
+                can&apos;t parse. Each of these silently desynchronizes
+                Postgres from Airtable.
+              </p>
+              <p className="text-[12px] italic leading-snug text-brand-muted">
+                The naive handler (verify signature → do work synchronously →
+                return 200) loses data in every one of these scenarios.
+              </p>
+            </div>
+          </Reveal>
+
+          {/* Solution card 2 */}
+          <Reveal delay={80}>
+            <div className="flex flex-col gap-3 rounded-2xl border border-brand-divider bg-brand-surface p-5 sm:p-6">
+              <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-brand-muted">
+                Three-layer defense · webhook-level
+              </p>
+              <div className="grid gap-3 lg:grid-cols-3">
+                {webhookSolutionLayers.map((s) => (
+                  <div
+                    key={s.step}
+                    className="flex flex-col gap-2 rounded-lg border border-brand-divider bg-brand-tint p-4"
+                  >
+                    <div className="flex items-baseline gap-2">
+                      <span className="font-mono text-sm font-semibold text-brand-accent">
+                        {s.step}
+                      </span>
+                      <h5 className="text-[14px] font-semibold text-brand-ink">
+                        {s.label}
+                      </h5>
+                    </div>
+                    <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-brand-accent">
+                      {s.framing}
+                    </p>
+                    <p className="text-[12px] leading-snug text-brand-muted">
+                      {s.body}
+                    </p>
+                  </div>
+                ))}
+              </div>
+              <p className="font-mono text-[11px] italic leading-snug text-brand-muted">
+                The handler stays sub-100ms regardless of downstream load.
+                Retries are bounded and observable. Drops are caught by
+                reconciliation within 24 hours. The system always converges.
+              </p>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* Section 7 — Honest pushback */}
+      <section
+        id="pushback"
+        className="scroll-mt-8 bg-gradient-to-b from-brand-surface to-brand-surface-alt px-6 py-12 sm:py-16"
+      >
+        <SectionHeader
+          compact
+          sectionDetails={{
+            kicker: "Section 7",
+            title: "Honest pushback",
+            subtitle:
+              "The brief explicitly invited timeline pushback. Two columns: what I'd argue for cutting from v1, and what I'd want answered before writing code.",
+          }}
+        />
+
+        <div className="mx-auto flex max-w-6xl flex-col gap-8">
+          {/* What I'd cut */}
+          <div className="flex flex-col gap-3">
             <Reveal>
-              <div className="flex h-full flex-col gap-2 rounded-2xl border border-brand-divider bg-brand-surface p-5 sm:p-6">
+              <div className="flex flex-wrap items-baseline justify-between gap-2">
                 <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-brand-accent">
-                  Scale at 100+ markets
+                  What I&apos;d cut from v1 to actually hit 8 weeks
                 </p>
-                <p className="text-[13px] leading-snug text-brand-ink">
-                  The bottleneck isn&apos;t Postgres — it&apos;s Airtable&apos;s
-                  API rate limits (5 req/s per base).
+                <p className="font-mono text-[10px] italic text-brand-muted">
+                  &ldquo;Honest timeline pushback welcomed&rdquo; — from the brief
                 </p>
-                <ul className="flex flex-col gap-1.5 pt-1">
-                  <li className="flex gap-2 text-[13px] leading-snug text-brand-muted">
-                    <span
-                      className="mt-1.5 inline-block h-1 w-1 shrink-0 rounded-full bg-brand-accent/60"
-                      aria-hidden
-                    />
-                    <span>
-                      Per-region Airtable bases (sharding) + queue-based
-                      ingestion buffer between webhook and Postgres write
-                    </span>
-                  </li>
-                  <li className="flex gap-2 text-[13px] leading-snug text-brand-muted">
-                    <span
-                      className="mt-1.5 inline-block h-1 w-1 shrink-0 rounded-full bg-brand-accent/60"
-                      aria-hidden
-                    />
-                    <span>Webhook back-pressure handling via queue depth</span>
-                  </li>
-                </ul>
               </div>
             </Reveal>
-            <Reveal delay={80}>
-              <div className="flex h-full rounded-r-lg border-l-4 border-brand-accent bg-brand-accent-soft px-4 py-3 sm:px-5">
+            <div className="grid gap-3 lg:grid-cols-3">
+              {cutItems.map((c, idx) => (
+                <Reveal key={c.label} delay={idx * 80}>
+                  <div className="flex h-full flex-col gap-2 rounded-2xl border border-brand-divider bg-brand-surface p-4 sm:p-5">
+                    <div className="flex items-baseline gap-2">
+                      <span className="font-mono text-sm font-semibold text-brand-accent">
+                        {String(idx + 1).padStart(2, "0")}
+                      </span>
+                      <h4 className="text-[15px] font-semibold text-brand-ink">
+                        {c.label}
+                      </h4>
+                    </div>
+                    <p className="text-[12px] leading-snug text-brand-muted">
+                      {c.rationale}
+                    </p>
+                    <p className="mt-auto pt-2 font-mono text-[10px] uppercase tracking-[0.18em] text-brand-accent">
+                      → {c.payoff}
+                    </p>
+                  </div>
+                </Reveal>
+              ))}
+            </div>
+            <Reveal delay={240}>
+              <div className="rounded-r-lg border-l-4 border-brand-accent bg-brand-accent-soft px-4 py-3 sm:px-5">
                 <p className="text-[13px] leading-snug text-brand-ink sm:text-sm">
                   <span className="font-semibold text-brand-accent">
-                    Honest framing:{" "}
+                    Net shape:{" "}
                   </span>
-                  I&apos;ve shipped this exact pattern with FMCSA + Zoho. The
-                  Airtable webhook specifics — payload shape, rate limits,
-                  scope tokens — need a day of ramp. The architecture and
-                  failure modes I already know. Rox Radar gave me direct
-                  Airtable production experience, including the operational
-                  pain.
+                  Phases 0–4 + most of 5 inside 8 weeks. Phase 6 artifacts slide
+                  into the 30–60 day post-launch window the brief already
+                  mentions. The product launches on schedule; the audit
+                  paperwork lands behind it.
                 </p>
               </div>
             </Reveal>
+          </div>
+
+          {/* Open questions */}
+          <div className="flex flex-col gap-3">
+            <Reveal>
+              <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-brand-muted">
+                Questions I&apos;d want answered week 1
+              </p>
+            </Reveal>
+            <div className="grid gap-3 sm:grid-cols-2">
+              {openQuestions.map((o, idx) => (
+                <Reveal key={o.q} delay={idx * 80}>
+                  <div className="flex h-full flex-col gap-2 rounded-xl border border-brand-divider bg-brand-tint p-4 sm:p-5">
+                    <div className="flex items-baseline gap-2">
+                      <span className="font-mono text-sm font-semibold text-brand-accent">
+                        {String(idx + 1).padStart(2, "0")}
+                      </span>
+                      <h5 className="text-[14px] font-semibold text-brand-ink">
+                        {o.q}
+                      </h5>
+                    </div>
+                    <p className="text-[12px] leading-snug text-brand-muted">
+                      {o.why}
+                    </p>
+                    <p className="mt-auto pt-2 font-mono text-[10px] uppercase tracking-[0.18em] text-brand-muted">
+                      Impact · {o.impact}
+                    </p>
+                  </div>
+                </Reveal>
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -1501,8 +1733,10 @@ const FoundraFitPage = () => {
       <section className="bg-brand-surface px-6 pb-20 pt-8">
         <Reveal>
           <p className="mx-auto max-w-2xl text-center text-sm italic leading-relaxed text-brand-muted sm:text-base">
-            Happy to walk through any section, anchor, or assumption in detail
-            on the call.
+            If we hire-fit, day 1 I&apos;d start by reading every Airtable
+            column with Haley and locking the field-ownership matrix before
+            touching code. Happy to walk through any section, anchor, or
+            assumption on the call.
           </p>
         </Reveal>
       </section>
