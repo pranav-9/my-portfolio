@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, ArrowUpRight } from "lucide-react";
+import { ArrowLeft, ArrowRight, ArrowUpRight } from "lucide-react";
 import {
   getProject,
   getProjectsWithCaseStudies,
@@ -189,22 +189,30 @@ export default async function ProjectPage(
             <Section number="03" title="Key decisions">
               <div className="flex flex-col gap-5">
                 {cs.decisions.map((d, idx) => (
-                  <div
-                    key={d.title}
-                    className="flex gap-6 rounded-3xl border border-brand-divider bg-white p-7 transition hover:border-brand-ink hover:shadow-[0_20px_50px_-20px_rgba(53,87,148,0.25)] sm:gap-8 sm:p-10"
+                  <Link
+                    key={d.slug}
+                    href={`/projects/${project.slug}/decisions/${d.slug}`}
+                    className="group flex gap-6 rounded-3xl border border-brand-divider bg-white p-7 transition hover:-translate-y-0.5 hover:border-brand-ink hover:shadow-[0_20px_50px_-20px_rgba(53,87,148,0.25)] sm:gap-8 sm:p-10"
                   >
                     <span className="font-mono text-3xl leading-none text-brand-accent/30 sm:text-5xl">
                       {String(idx + 1).padStart(2, "0")}
                     </span>
-                    <div className="flex flex-col gap-3">
+                    <div className="flex flex-1 flex-col gap-3">
                       <h3 className="text-lg font-semibold text-brand-ink sm:text-xl">
                         {d.title}
                       </h3>
                       <p className="text-base leading-relaxed text-brand-muted">
                         {d.rationale}
                       </p>
+                      <span className="mt-2 inline-flex items-center gap-1.5 font-mono text-xs uppercase tracking-wider text-brand-accent transition group-hover:text-brand-ink">
+                        View deep dive
+                        <ArrowRight
+                          size={12}
+                          className="transition-transform group-hover:translate-x-0.5"
+                        />
+                      </span>
                     </div>
-                  </div>
+                  </Link>
                 ))}
               </div>
             </Section>

@@ -4,13 +4,27 @@ export type Phase = {
   summary: string;
 };
 
+export type Metric = {
+  label: string;
+  value: string;
+  caption?: string;
+};
+
+export type Decision = {
+  slug: string;
+  title: string;
+  rationale: string;
+  body?: string;
+  metrics?: Metric[];
+};
+
 export type CaseStudy = {
   problem: string;
   context: string[];
   pullQuote?: string;
   whatIBuilt: string[];
   phases?: Phase[];
-  decisions: { title: string; rationale: string }[];
+  decisions: Decision[];
   scope?: string;
   outcome: string[];
   liveUrl?: string;
@@ -95,16 +109,19 @@ export const projects: Project[] = [
       ],
       decisions: [
         {
+          slug: "schema-first-contracts",
           title: "Schema-first JSON contracts everywhere — no regex on free text",
           rationale:
             "Every phase has a JSON Schema; every model call uses structured JSON mode. The schemas turned out to be the codebase's most valuable asset — the Phase 5 also-considered structure (next-best catalysts with explicit rejection reasons) and the Phase 6 credibility enum are domain modeling that only comes out of painful iteration. If everything else were thrown out tomorrow, the prompts and the schemas would still port to whatever replaced them.",
         },
         {
+          slug: "llm-proposes-code-verifies",
           title: "LLM proposes, code verifies",
           rationale:
             "Normalizers rank, filter, clamp, and de-duplicate model output before persistence. The model never produces the final row directly. Cheaper than stacking another LLM as a verifier — and actually deterministic about what's been checked.",
         },
         {
+          slug: "deterministic-scoring",
           title: "Deterministic post-processing for scores",
           rationale:
             "Scores like Phase 5's `growth_score` are computed in Python after the LLM returns, not asked of the model. Reproducible across runs, auditable, tunable without re-prompting.",
@@ -138,3 +155,16 @@ export const getProject = (slug: string): Project | undefined =>
 
 export const getProjectsWithCaseStudies = (): Project[] =>
   projects.filter((p) => p.caseStudy);
+
+export const getDecision = (
+  projectSlug: string,
+  decisionSlug: string,
+): { project: Project; decision: Decision } | undefined => {
+  const project = getProject(projectSlug);
+  if (!project?.caseStudy) return undefined;
+  const decision = project.caseStudy.decisions.find(
+    (d) => d.slug === decisionSlug,
+  );
+  if (!decision) return undefined;
+  return { project, decision };
+};
