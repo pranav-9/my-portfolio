@@ -123,6 +123,10 @@
   @apply inline-block h-1.5 w-1.5 rounded-full bg-brand-accent;
 }
 
+@utility shadow-accent-soft {
+  box-shadow: 0 20px 50px -20px rgb(53 87 148 / 0.25);
+}
+
 /* Scroll-reveal: JS toggles data-revealed="true" via IntersectionObserver */
 [data-reveal] {
   opacity: 0;
