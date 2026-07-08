@@ -5,7 +5,7 @@ import Reveal from "./reveal";
 
 const TimeLine = () => {
   const sectionDetails = {
-    kicker: "7+ years shipping",
+    kicker: "9 years shipping",
     title: "Experience",
     subtitle:
       "Fintech, consumer health, entertainment, and 0-to-1 startups. Individual contributor to CTO.",

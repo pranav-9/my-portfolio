@@ -16,11 +16,11 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Pranav Yadav — Full Stack Engineer",
   description:
-    "Full Stack Engineer with 7+ years across backend, frontend, and product. Previously CTO at On The Move; currently shipping for Journey Entertainment.",
+    "Full Stack Engineer with 9 years across backend, frontend, and product. Previously CTO at On The Move; now on Toptal client engagements and building Story of a Stock.",
   openGraph: {
     title: "Pranav Yadav — Full Stack Engineer",
     description:
-      "7+ years shipping product across backend, frontend, and the full stack. Previously CTO at On The Move.",
+      "9 years shipping product across backend, frontend, and the full stack. Previously CTO at On The Move.",
     type: "website",
   },
 };
