@@ -23,7 +23,7 @@ const nowContent: NowContent = {
     </>,
     <>
       <a
-        href="https://talent.toptal.com/resume/developers/pranav-yadav"
+        href="https://www.toptal.com/developers/resume/pranav-yadav#NW8lap"
         target="_blank"
         rel="noopener noreferrer"
         className="text-brand-accent underline decoration-brand-accent/40 underline-offset-4 transition hover:text-brand-ink hover:decoration-brand-ink"
@@ -67,7 +67,7 @@ const Column = ({
   delay: number;
 }) => (
   <Reveal delay={delay}>
-    <div className="flex h-full flex-col gap-4 rounded-2xl border border-brand-divider bg-white p-7 transition hover:-translate-y-0.5 hover:border-brand-ink hover:shadow-[0_20px_50px_-20px_rgba(53,87,148,0.25)]">
+    <div className="flex h-full flex-col gap-4 rounded-2xl border border-brand-divider bg-white p-7 transition hover:-translate-y-0.5 hover:border-brand-ink hover:shadow-accent-soft">
       <span className="kicker">
         <span className="kicker-dot" />
         {label}

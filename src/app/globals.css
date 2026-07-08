@@ -100,6 +100,9 @@
   --brand-divider: #e9ebee;
   --brand-warm-from: #61605e;
   --brand-warm-to: #b1afa9;
+
+  /* Layout constants */
+  --nav-h: 4rem; /* keep in sync with NavBar height (h-(--nav-h)) */
 }
 
 @layer base {
@@ -123,8 +126,25 @@
   @apply inline-block h-1.5 w-1.5 rounded-full bg-brand-accent;
 }
 
+/* Accent-tinted shadows — always derive from --brand-accent, never raw rgba() in JSX */
 @utility shadow-accent-soft {
-  box-shadow: 0 20px 50px -20px rgb(53 87 148 / 0.25);
+  box-shadow: 0 20px 50px -20px color-mix(in srgb, var(--brand-accent) 25%, transparent);
+}
+
+@utility shadow-accent-pill {
+  box-shadow: 0 8px 20px -10px color-mix(in srgb, var(--brand-accent) 40%, transparent);
+}
+
+@utility shadow-accent-deep {
+  box-shadow: 0 30px 80px -20px color-mix(in srgb, var(--brand-accent) 25%, transparent);
+}
+
+@utility shadow-accent-lift {
+  box-shadow: 0 30px 80px -30px color-mix(in srgb, var(--brand-accent) 35%, transparent);
+}
+
+@utility shadow-accent-quote {
+  box-shadow: 0 20px 60px -30px color-mix(in srgb, var(--brand-accent) 30%, transparent);
 }
 
 /* Scroll-reveal: JS toggles data-revealed="true" via IntersectionObserver */

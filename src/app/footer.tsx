@@ -41,7 +41,7 @@ const Footer = () => {
                 LinkedIn
               </a>
               <a
-                href="https://talent.toptal.com/resume/developers/pranav-yadav"
+                href="https://www.toptal.com/developers/resume/pranav-yadav#NW8lap"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 rounded-full border border-brand-divider px-6 py-3 text-sm font-medium text-brand-ink transition hover:border-brand-ink"

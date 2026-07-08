@@ -38,7 +38,7 @@ const JobHolder = (props: {
 
       {/* Card */}
       <div
-        className={`flex flex-col gap-4 rounded-2xl border border-brand-divider bg-white p-6 transition hover:-translate-y-0.5 hover:border-brand-ink hover:shadow-[0_20px_50px_-20px_rgba(53,87,148,0.25)] ${
+        className={`flex flex-col gap-4 rounded-2xl border border-brand-divider bg-white p-6 transition hover:-translate-y-0.5 hover:border-brand-ink hover:shadow-accent-soft ${
           align === "right" ? "sm:order-3" : "sm:order-1"
         }`}
       >

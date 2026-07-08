@@ -58,7 +58,7 @@ const NavBar = (props: { breadcrumb?: string }) => {
 
   return (
     <header className="sticky top-0 z-50 border-b border-brand-divider/60 bg-white/70 backdrop-blur-lg">
-      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-6">
+      <div className="mx-auto flex h-(--nav-h) max-w-6xl items-center justify-between gap-4 px-6">
         <div className="flex min-w-0 items-center gap-3 sm:gap-4">
           <Link href="/" className="flex shrink-0 items-center gap-3">
             <Image
@@ -110,7 +110,7 @@ const NavBar = (props: { breadcrumb?: string }) => {
               {csOpen && (
                 <div
                   role="menu"
-                  className="absolute right-0 top-full z-50 mt-2 w-96 rounded-2xl border border-brand-divider bg-white p-2 shadow-[0_30px_80px_-20px_rgba(53,87,148,0.25)]"
+                  className="absolute right-0 top-full z-50 mt-2 w-96 rounded-2xl border border-brand-divider bg-white p-2 shadow-accent-deep"
                 >
                   {caseStudies.map((p) => (
                     <div key={p.slug} className="flex flex-col">

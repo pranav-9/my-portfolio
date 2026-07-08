@@ -59,7 +59,7 @@ const Skills = () => {
       <div className="mx-auto grid max-w-6xl gap-6 sm:grid-cols-2">
         {capabilities.map((cap, idx) => (
           <Reveal key={cap.title} delay={idx * 100}>
-            <div className="flex h-full flex-col gap-4 rounded-2xl border border-brand-divider bg-white p-7 transition hover:-translate-y-0.5 hover:border-brand-ink hover:shadow-[0_20px_50px_-20px_rgba(53,87,148,0.25)]">
+            <div className="flex h-full flex-col gap-4 rounded-2xl border border-brand-divider bg-white p-7 transition hover:-translate-y-0.5 hover:border-brand-ink hover:shadow-accent-soft">
               <h3 className="text-xl font-semibold tracking-tight text-brand-ink">
                 {cap.title}
               </h3>

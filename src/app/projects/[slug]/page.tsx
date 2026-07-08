@@ -94,7 +94,7 @@ export default async function ProjectPage(
 
         <div className="mx-auto max-w-5xl px-6 pb-20 sm:pb-24">
           <Reveal>
-            <div className="overflow-hidden rounded-3xl border border-brand-divider bg-white shadow-[0_30px_80px_-30px_rgba(53,87,148,0.35)]">
+            <div className="overflow-hidden rounded-3xl border border-brand-divider bg-white shadow-accent-lift">
               <div className="relative aspect-[16/9]">
                 <Image
                   src={project.imageUrl}
@@ -130,7 +130,7 @@ export default async function ProjectPage(
 
           {cs.pullQuote && (
             <Reveal>
-              <blockquote className="relative rounded-3xl border border-brand-ink/10 bg-white px-8 py-12 shadow-[0_20px_60px_-30px_rgba(53,87,148,0.3)] sm:px-14 sm:py-14">
+              <blockquote className="relative rounded-3xl border border-brand-ink/10 bg-white px-8 py-12 shadow-accent-quote sm:px-14 sm:py-14">
                 <span
                   aria-hidden
                   className="absolute -top-6 left-6 font-serif text-8xl leading-none text-brand-accent sm:-top-8 sm:left-10 sm:text-9xl"
@@ -160,7 +160,7 @@ export default async function ProjectPage(
                     {cs.phases.map((phase, i) => (
                       <div
                         key={phase.id}
-                        className="flex flex-col gap-3 rounded-2xl border border-brand-divider bg-white p-6 transition hover:-translate-y-0.5 hover:border-brand-ink hover:shadow-[0_20px_50px_-20px_rgba(53,87,148,0.25)]"
+                        className="flex flex-col gap-3 rounded-2xl border border-brand-divider bg-white p-6 transition hover:-translate-y-0.5 hover:border-brand-ink hover:shadow-accent-soft"
                       >
                         <div className="flex items-center justify-between">
                           <span className="font-mono text-xs uppercase tracking-wider text-brand-accent">
@@ -192,7 +192,7 @@ export default async function ProjectPage(
                   <Link
                     key={d.slug}
                     href={`/projects/${project.slug}/decisions/${d.slug}`}
-                    className="group flex gap-6 rounded-3xl border border-brand-divider bg-white p-7 transition hover:-translate-y-0.5 hover:border-brand-ink hover:shadow-[0_20px_50px_-20px_rgba(53,87,148,0.25)] sm:gap-8 sm:p-10"
+                    className="group flex gap-6 rounded-3xl border border-brand-divider bg-white p-7 transition hover:-translate-y-0.5 hover:border-brand-ink hover:shadow-accent-soft sm:gap-8 sm:p-10"
                   >
                     <span className="font-mono text-3xl leading-none text-brand-accent/30 sm:text-5xl">
                       {String(idx + 1).padStart(2, "0")}

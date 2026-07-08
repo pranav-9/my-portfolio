@@ -11,7 +11,7 @@ const ProjectCarousel = (props: { projectDetails: ProjectDetails }) => {
       href={p.website}
       target="_blank"
       rel="noopener noreferrer"
-      className="group flex h-full flex-col overflow-hidden rounded-3xl border border-brand-divider bg-white transition duration-300 hover:-translate-y-1 hover:border-brand-ink hover:shadow-[0_30px_80px_-30px_rgba(53,87,148,0.35)]"
+      className="group flex h-full flex-col overflow-hidden rounded-3xl border border-brand-divider bg-white transition duration-300 hover:-translate-y-1 hover:border-brand-ink hover:shadow-accent-lift"
     >
       <div className="relative aspect-[16/9] overflow-hidden bg-brand-surface-alt">
         <Image

@@ -399,7 +399,7 @@ const VolvoFitPage = () => {
               <Reveal key={card.href} delay={120 + idx * 100}>
                 <a
                   href={card.href}
-                  className="group flex h-full flex-col gap-6 rounded-2xl border border-brand-divider bg-brand-surface p-6 transition hover:-translate-y-0.5 hover:border-brand-accent hover:shadow-[0_20px_50px_-20px_rgba(53,87,148,0.25)] sm:p-8"
+                  className="group flex h-full flex-col gap-6 rounded-2xl border border-brand-divider bg-brand-surface p-6 transition hover:-translate-y-0.5 hover:border-brand-accent hover:shadow-accent-soft sm:p-8"
                 >
                   <div className="flex items-baseline justify-between">
                     <span className="font-mono text-3xl font-semibold text-brand-accent sm:text-4xl">
@@ -449,7 +449,7 @@ const VolvoFitPage = () => {
             <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
               {strengths.map((s, idx) => (
                 <Reveal key={s.title} delay={idx * 80}>
-                  <div className="flex h-full flex-col gap-2.5 rounded-xl border border-brand-divider bg-brand-tint p-4 transition hover:-translate-y-0.5 hover:border-brand-accent hover:shadow-[0_20px_50px_-20px_rgba(53,87,148,0.25)] sm:p-5">
+                  <div className="flex h-full flex-col gap-2.5 rounded-xl border border-brand-divider bg-brand-tint p-4 transition hover:-translate-y-0.5 hover:border-brand-accent hover:shadow-accent-soft sm:p-5">
                     <div className="flex items-baseline gap-2">
                       <span className="font-mono text-lg font-semibold text-brand-accent">
                         {String(idx + 1).padStart(2, "0")}
@@ -496,7 +496,7 @@ const VolvoFitPage = () => {
             <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
               {gaps.map((g, idx) => (
                 <Reveal key={g.gap} delay={idx * 80}>
-                  <div className="flex h-full flex-col gap-2.5 rounded-xl border border-brand-divider bg-white p-4 transition hover:-translate-y-0.5 hover:border-brand-accent hover:shadow-[0_20px_50px_-20px_rgba(53,87,148,0.25)] sm:p-5">
+                  <div className="flex h-full flex-col gap-2.5 rounded-xl border border-brand-divider bg-white p-4 transition hover:-translate-y-0.5 hover:border-brand-accent hover:shadow-accent-soft sm:p-5">
                     <div className="flex flex-col gap-1.5">
                       <h4 className="text-base font-semibold text-brand-ink sm:text-lg">
                         {g.gap}
