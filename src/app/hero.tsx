@@ -3,6 +3,7 @@ import Link from "next/link";
 import React from "react";
 import { ArrowRight, Github, Linkedin, Mail } from "lucide-react";
 import Reveal from "./reveal";
+import ToptalBadge from "./toptalBadge";
 
 const Hero = () => {
   return (
@@ -52,16 +53,6 @@ const Hero = () => {
 
           <div className="flex flex-wrap items-center gap-4 pt-4 text-brand-muted sm:gap-5">
             <a
-              href="https://www.toptal.com/developers/resume/pranav-yadav#NW8lap"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Toptal profile"
-              className="inline-flex items-center gap-2 rounded-full border border-brand-ink/15 bg-white px-3 py-1.5 text-xs font-medium text-brand-ink transition hover:border-brand-ink hover:shadow-accent-pill"
-            >
-              <span className="h-1.5 w-1.5 rounded-full bg-brand-accent" />
-              Top 3% · Toptal Network · 4 yrs
-            </a>
-            <a
               href="https://www.linkedin.com/in/pranav-yadav-375247b6/"
               target="_blank"
               rel="noopener noreferrer"
@@ -94,6 +85,9 @@ const Hero = () => {
               sizes="(max-width: 640px) 260px, (max-width: 1024px) 300px, 380px"
               className="h-auto w-full rounded-[1.4rem] object-cover"
             />
+          </div>
+          <div className="absolute -bottom-9 -right-5 origin-bottom-right scale-[0.55] drop-shadow-xl sm:-right-8 sm:scale-[0.62] lg:-bottom-10 lg:scale-[0.7]">
+            <ToptalBadge />
           </div>
         </Reveal>
       </div>
