@@ -86,7 +86,7 @@ const Hero = () => {
               className="h-auto w-full rounded-[1.4rem] object-cover"
             />
           </div>
-          <div className="absolute -bottom-9 -right-5 origin-bottom-right scale-[0.55] drop-shadow-xl sm:-right-8 sm:scale-[0.62] lg:-bottom-10 lg:scale-[0.7]">
+          <div className="absolute -bottom-5 -right-5 origin-bottom-right scale-[0.55] drop-shadow-xl sm:-right-8 sm:scale-[0.62] lg:-bottom-10 lg:scale-[0.7]">
             <ToptalBadge />
           </div>
         </Reveal>
