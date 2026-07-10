@@ -87,7 +87,7 @@ export const projects: Project[] = [
     slug: "concall-alpha",
     category: "product",
     featured: true,
-    title: "Concall Alpha AI",
+    title: "Story of a Stock",
     role: "Solo build · Two systems",
     description:
       "Investment research platform for Indian listed companies. A Python pipeline extracts; a Next.js app renders.",
@@ -97,15 +97,15 @@ export const projects: Project[] = [
     website: "https://concall-alpha.vercel.app/",
     caseStudy: {
       problem:
-        "Indian equity investors spend hours per company per quarter reading concall transcripts, investor presentations, and annual reports. Most of the signal is buried in unstructured text. Concall Alpha AI turns those documents into structured, comparable, queryable research data.",
+        "Indian equity investors spend hours per company per quarter reading concall transcripts, investor presentations, and annual reports. Most of the signal is buried in unstructured text. Story of a Stock turns those documents into structured, comparable, queryable research data.",
       context: [
-        "Two systems with a clean split: Concallyser (Python) extracts; Concall Alpha AI (Next.js) renders. The contract between them is the Supabase schema — neither side needs to know anything about the other beyond the shape of those tables.",
+        "Two systems with a clean split: Concallyser (Python) extracts; Story of a Stock (Next.js) renders. The contract between them is the Supabase schema — neither side needs to know anything about the other beyond the shape of those tables.",
         "LLM hallucination is unacceptable when the output feeds investment decisions — silently wrong is worse than missing.",
         "Outputs have to be schema-conformant for downstream use: search across companies and quarters, comparison views, credibility-weighted summaries.",
         "Solo build. Opinionated stack. Sequential batch is fine at the current company count; that constraint shapes a lot of the design.",
       ],
       pullQuote:
-        "Concallyser is the factory. Concall Alpha AI is the showroom. The contract between them is the Supabase schema.",
+        "Concallyser is the factory. Story of a Stock is the showroom. The contract between them is the Supabase schema.",
       whatIBuilt: [
         "The backend orchestrator (`run-seeds`) reads company codes from `seeds.txt` and iterates through four extraction phases per company. Each phase has its own JSON Schema, its own prompt, and its own normalizer.",
         "Shared infrastructure: one unified prep entry point for CSV discovery, FY/quarter normalization, PDF caching, and Gemini Files API upload. A minimal LLM provider abstraction (Gemini default; Claude available for text-only flows). PDFs cached locally; Gemini file IDs cached with a 20-day TTL aligned to the provider's actual retention window — not picked from convenience.",
