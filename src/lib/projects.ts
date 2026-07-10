@@ -31,6 +31,14 @@ export type CaseStudy = {
   repoUrl?: string;
 };
 
+export type ProjectCategory = "product" | "hybrid" | "webflow";
+
+export const categoryLabels: Record<ProjectCategory, string> = {
+  product: "Product & AI builds",
+  hybrid: "Webflow ⇄ Next.js hybrids",
+  webflow: "Webflow builds",
+};
+
 export type Project = {
   slug: string;
   title: string;
@@ -43,11 +51,17 @@ export type Project = {
   /** Omit for private client work — the card renders without an outbound link. */
   website?: string;
   caseStudy?: CaseStudy;
+  /** Grouping on the /projects index page. */
+  category: ProjectCategory;
+  /** Featured projects appear in the home "Selected work" grid. */
+  featured?: boolean;
 };
 
 export const projects: Project[] = [
   {
     slug: "on-the-move",
+    category: "product",
+    featured: true,
     title: "On The Move",
     role: "CTO · 0-to-1",
     description:
@@ -59,6 +73,8 @@ export const projects: Project[] = [
   },
   {
     slug: "cruise-search",
+    category: "hybrid",
+    featured: true,
     title: "Cruise Package Search",
     role: "Toptal · Webflow Cloud",
     description:
@@ -69,6 +85,8 @@ export const projects: Project[] = [
   },
   {
     slug: "concall-alpha",
+    category: "product",
+    featured: true,
     title: "Concall Alpha AI",
     role: "Solo build · Two systems",
     description:
@@ -151,6 +169,8 @@ export const projects: Project[] = [
   },
   {
     slug: "kids-activities-search",
+    category: "product",
+    featured: true,
     title: "Kids Activities Search",
     role: "Toptal · Search",
     description:
@@ -161,6 +181,8 @@ export const projects: Project[] = [
   },
   {
     slug: "freight-renewals",
+    category: "product",
+    featured: true,
     title: "Freight Insurance Renewals",
     role: "Toptal · Automation",
     description:
@@ -171,6 +193,8 @@ export const projects: Project[] = [
   },
   {
     slug: "care-provider-portal",
+    category: "product",
+    featured: true,
     title: "Care-Provider Ops Portal",
     role: "Toptal · Ops platform",
     description:
@@ -179,7 +203,47 @@ export const projects: Project[] = [
     imageUrl: "/care-portal.png",
     stack: ["Next.js", "Firebase", "Airtable", "shadcn/ui"],
   },
+  {
+    slug: "otm-website",
+    category: "webflow",
+    title: "On The Move — Website",
+    role: "Webflow · Own product",
+    description:
+      "Brand and marketing site for the On The Move fitness platform — a dark, motion-led Webflow build that feeds signups into the app.",
+    impact: "The front door for the platform in the grid above.",
+    imageUrl: "/otm-website.png",
+    stack: ["Webflow"],
+    website: "https://www.onthemove.life/",
+  },
+  {
+    slug: "rox-radar",
+    category: "webflow",
+    title: "RoxRadar",
+    role: "Webflow · Full build",
+    description:
+      "HYROX race-planning platform — a global race calendar with ticket dates and alerts, list and map discovery, and an editorial layer.",
+    impact: "Live, tracking HYROX races worldwide.",
+    imageUrl: "/rox-radar.png",
+    stack: ["Webflow", "Webflow CMS"],
+    website: "https://www.roxradar.com/",
+  },
 ];
+
+export const getFeaturedProjects = (): Project[] =>
+  projects.filter((p) => p.featured);
+
+export const getProjectsByCategory = (): {
+  category: ProjectCategory;
+  label: string;
+  projects: Project[];
+}[] =>
+  (Object.keys(categoryLabels) as ProjectCategory[])
+    .map((category) => ({
+      category,
+      label: categoryLabels[category],
+      projects: projects.filter((p) => p.category === category),
+    }))
+    .filter((group) => group.projects.length > 0);
 
 export const getProject = (slug: string): Project | undefined =>
   projects.find((p) => p.slug === slug);
