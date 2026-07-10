@@ -58,6 +58,19 @@ Claude: read this at the start of site-work sessions; add new deferred items her
       hover:shadow-accent-soft` card recipe now repeats across ~8 places; extract
       a shared component when next touching several of them.
 
+## Projects grid — remaining additions (started 2026-07-08)
+
+- [ ] **Freight Expert card** — insurance-renewal microsites for trucking
+      carriers (Next.js, Supabase, OpenAI, Instantly.ai). Blocked on: a public
+      URL to link (card links to client/marketing sites per Pranav's call) and
+      a screenshot for the card image. *(Pranav provides both)*
+- [ ] **ASAPP portal card** — care-provider ops portal (Next.js, Firebase,
+      Airtable). Same blockers: public client URL + screenshot. Also confirm
+      the anonymized title ("Care-Provider Ops Portal"?).
+- [ ] **Confirm impact lines** on the two shipped cards — "~500 curated
+      sailings" and "3,500+ vetted programs" were read off the live sites;
+      correct if there are better numbers.
+
 ## Small / opportunistic
 
 - [ ] Remove stale git remote `origin-1` (points to old pranav-9/portfolio-website).
