@@ -56,6 +56,17 @@ export const projects: Project[] = [
     website: "https://platform.onthemove.life/home",
   },
   {
+    slug: "cruise-search",
+    title: "Cruise Package Search",
+    role: "Toptal · Full-stack",
+    description:
+      "Faceted cruise-package search for a US travel retailer — a Next.js app running inside their Webflow site via Webflow Cloud, on Cloudflare Workers.",
+    impact: "Live on the retailer's main site, searching ~500 curated sailings.",
+    imageUrl: "/cruise-search.png",
+    stack: ["Next.js", "TypeScript", "Webflow Cloud", "Cloudflare Workers", "Zustand"],
+    website: "https://www.onlinevacationcenter.com/search-exclusive-packages",
+  },
+  {
     slug: "concall-alpha",
     title: "Concall Alpha AI",
     role: "Solo build · Two systems",
@@ -136,6 +147,17 @@ export const projects: Project[] = [
       ],
       liveUrl: "https://concall-alpha.vercel.app/",
     },
+  },
+  {
+    slug: "kids-activities-search",
+    title: "Kids Activities Search",
+    role: "Toptal · Full-stack",
+    description:
+      "Consumer search platform for kids classes, camps, and events — Algolia-powered search with map exploration, verified providers, and reviews.",
+    impact: "Live, with 3,500+ vetted programs in its launch county.",
+    imageUrl: "/kids-search.png",
+    stack: ["Next.js", "Supabase", "Algolia", "Mapbox", "Sentry"],
+    website: "https://www.foundra.com",
   },
   {
     slug: "easy-leads-ai",
