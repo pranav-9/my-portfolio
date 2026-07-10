@@ -60,7 +60,7 @@ export const projects: Project[] = [
   {
     slug: "cruise-search",
     title: "Cruise Package Search",
-    role: "Toptal · Full-stack",
+    role: "Toptal · Webflow Cloud",
     description:
       "Faceted cruise-package search for a US travel retailer — a Next.js app running inside their Webflow site via Webflow Cloud, on Cloudflare Workers.",
     impact: "Live on the retailer's main site, searching ~500 curated sailings.",
@@ -152,7 +152,7 @@ export const projects: Project[] = [
   {
     slug: "kids-activities-search",
     title: "Kids Activities Search",
-    role: "Toptal · Full-stack",
+    role: "Toptal · Search",
     description:
       "Consumer search platform for kids classes, camps, and events — Algolia-powered search with map exploration, verified providers, and reviews.",
     impact: "Live, with 3,500+ vetted programs in its launch county.",
@@ -162,7 +162,7 @@ export const projects: Project[] = [
   {
     slug: "freight-renewals",
     title: "Freight Insurance Renewals",
-    role: "Toptal · Full-stack",
+    role: "Toptal · Automation",
     description:
       "Renewal system for trucking carriers — Excel-to-Supabase imports, automated personalized outreach, and a per-carrier microsite for docs and renewal preferences.",
     impact: "Replaces a manual renewal chase across hundreds of carriers.",
@@ -171,22 +171,11 @@ export const projects: Project[] = [
   {
     slug: "care-provider-portal",
     title: "Care-Provider Ops Portal",
-    role: "Toptal · Full-stack",
+    role: "Toptal · Ops platform",
     description:
       "Operations portal for a US care-services provider — session logging, authorizations and unit tracking, availability, and document workflows.",
     impact: "In daily use by the provider network and admins.",
     stack: ["Next.js", "Firebase", "Airtable", "shadcn/ui"],
-  },
-  {
-    slug: "easy-leads-ai",
-    title: "Easy Leads AI",
-    role: "Backend architect",
-    description:
-      "WhatsApp-native lead qualification engine. Qualifies, adapts, hands off — with an auto-generated sales script.",
-    impact: "Replaces the SDR top of funnel.",
-    imageUrl: "/easy-leads.svg",
-    stack: ["NestJS", "OpenAI", "WhatsApp Business API", "Botpress", "Webhooks"],
-    website: "https://github.com/pranav-9/easy-leads-ai",
   },
 ];
 

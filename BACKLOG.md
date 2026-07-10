@@ -60,6 +60,15 @@ Claude: read this at the start of site-work sessions; add new deferred items her
 
 ## Projects grid — polish (all four client cards shipped 2026-07-08)
 
+- [ ] **Anonymized case studies for the client projects** — priority: Freight
+      Renewals + Care-Provider Ops Portal (their cards currently go nowhere;
+      a half-page problem/constraints/decisions writeup each turns "Private"
+      into a teaser). Cruise + Kids after. Infrastructure exists
+      (`caseStudy` → internal route; see specs/case-studies-nav-deep-dives.md).
+      Needs a short facts interview with Pranav per project. When these land,
+      restore hover-lift on those cards (removed 2026-07-08 while cards are
+      link-less).
+
 - [ ] **Sanitized screenshots for Freight Renewals + Care-Provider Ops Portal**
       — both currently show the "Client work · Private" placeholder. A blurred
       or demo-data screenshot would lift the cards; Pranav provides (private

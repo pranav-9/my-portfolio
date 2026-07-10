@@ -1,10 +1,15 @@
 import Image from "next/image";
 import React from "react";
 import { ArrowUpRight, Lock } from "lucide-react";
+import { cn } from "@/lib/utils";
 import type { ProjectDetails } from "./project";
 
 const cardClasses =
-  "group flex h-full flex-col overflow-hidden rounded-3xl border border-brand-divider bg-white transition duration-300 hover:-translate-y-1 hover:border-brand-ink hover:shadow-accent-lift";
+  "group flex h-full flex-col overflow-hidden rounded-3xl border border-brand-divider bg-white";
+
+// Hover affordances only on cards that actually go somewhere.
+const linkedCardClasses =
+  "transition duration-300 hover:-translate-y-1 hover:border-brand-ink hover:shadow-accent-lift";
 
 const CardMedia = ({ p }: { p: ProjectDetails }) => (
   <div className="relative aspect-[16/9] overflow-hidden bg-brand-surface-alt">
@@ -79,7 +84,7 @@ const ProjectCarousel = (props: { projectDetails: ProjectDetails }) => {
       href={p.website}
       target="_blank"
       rel="noopener noreferrer"
-      className={cardClasses}
+      className={cn(cardClasses, linkedCardClasses)}
     >
       <CardMedia p={p} />
       <CardBody p={p} />
