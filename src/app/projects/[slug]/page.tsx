@@ -92,22 +92,24 @@ export default async function ProjectPage(
           </Reveal>
         </header>
 
-        <div className="mx-auto max-w-5xl px-6 pb-20 sm:pb-24">
-          <Reveal>
-            <div className="overflow-hidden rounded-3xl border border-brand-divider bg-white shadow-accent-lift">
-              <div className="relative aspect-[16/9]">
-                <Image
-                  src={project.imageUrl}
-                  alt={`${project.title} — screenshot`}
-                  fill
-                  sizes="(max-width: 1024px) 100vw, 1024px"
-                  className="object-cover object-left-top"
-                  priority
-                />
+        {project.imageUrl && (
+          <div className="mx-auto max-w-5xl px-6 pb-20 sm:pb-24">
+            <Reveal>
+              <div className="overflow-hidden rounded-3xl border border-brand-divider bg-white shadow-accent-lift">
+                <div className="relative aspect-[16/9]">
+                  <Image
+                    src={project.imageUrl}
+                    alt={`${project.title} — screenshot`}
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 1024px"
+                    className="object-cover object-left-top"
+                    priority
+                  />
+                </div>
               </div>
-            </div>
-          </Reveal>
-        </div>
+            </Reveal>
+          </div>
+        )}
       </article>
 
       <article className="bg-brand-surface px-6 py-20 sm:py-28">

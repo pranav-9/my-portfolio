@@ -37,9 +37,11 @@ export type Project = {
   role: string;
   description: string;
   impact: string;
-  imageUrl: string;
+  /** Omit for private client work — the card renders a designed placeholder. */
+  imageUrl?: string;
   stack: string[];
-  website: string;
+  /** Omit for private client work — the card renders without an outbound link. */
+  website?: string;
   caseStudy?: CaseStudy;
 };
 
@@ -64,7 +66,6 @@ export const projects: Project[] = [
     impact: "Live on the retailer's main site, searching ~500 curated sailings.",
     imageUrl: "/cruise-search.png",
     stack: ["Next.js", "TypeScript", "Webflow Cloud", "Cloudflare Workers", "Zustand"],
-    website: "https://www.onlinevacationcenter.com/search-exclusive-packages",
   },
   {
     slug: "concall-alpha",
@@ -157,7 +158,24 @@ export const projects: Project[] = [
     impact: "Live, with 3,500+ vetted programs in its launch county.",
     imageUrl: "/kids-search.png",
     stack: ["Next.js", "Supabase", "Algolia", "Mapbox", "Sentry"],
-    website: "https://www.foundra.com",
+  },
+  {
+    slug: "freight-renewals",
+    title: "Freight Insurance Renewals",
+    role: "Toptal · Full-stack",
+    description:
+      "Renewal system for trucking carriers — Excel-to-Supabase imports, automated personalized outreach, and a per-carrier microsite for docs and renewal preferences.",
+    impact: "Replaces a manual renewal chase across hundreds of carriers.",
+    stack: ["Next.js", "Supabase", "OpenAI", "Instantly.ai", "Tailwind"],
+  },
+  {
+    slug: "care-provider-portal",
+    title: "Care-Provider Ops Portal",
+    role: "Toptal · Full-stack",
+    description:
+      "Operations portal for a US care-services provider — session logging, authorizations and unit tracking, availability, and document workflows.",
+    impact: "In daily use by the provider network and admins.",
+    stack: ["Next.js", "Firebase", "Airtable", "shadcn/ui"],
   },
   {
     slug: "easy-leads-ai",
