@@ -166,6 +166,7 @@ export const projects: Project[] = [
     description:
       "Renewal system for trucking carriers — Excel-to-Supabase imports, automated personalized outreach, and a per-carrier microsite for docs and renewal preferences.",
     impact: "Replaces a manual renewal chase across hundreds of carriers.",
+    imageUrl: "/freight-renewals.png",
     stack: ["Next.js", "Supabase", "OpenAI", "Instantly.ai", "Tailwind"],
   },
   {
@@ -175,6 +176,7 @@ export const projects: Project[] = [
     description:
       "Operations portal for a US care-services provider — session logging, authorizations and unit tracking, availability, and document workflows.",
     impact: "In daily use by the provider network and admins.",
+    imageUrl: "/care-portal.png",
     stack: ["Next.js", "Firebase", "Airtable", "shadcn/ui"],
   },
 ];
