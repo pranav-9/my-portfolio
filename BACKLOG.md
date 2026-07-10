@@ -69,10 +69,11 @@ Claude: read this at the start of site-work sessions; add new deferred items her
       restore hover-lift on those cards (removed 2026-07-08 while cards are
       link-less).
 
-- [ ] **Sanitized screenshots for Freight Renewals + Care-Provider Ops Portal**
-      — both currently show the "Client work · Private" placeholder. A blurred
-      or demo-data screenshot would lift the cards; Pranav provides (private
-      apps — not screenshotting real client data without his say-so).
+- [ ] **Richer screenshot for Care-Provider Ops Portal** — card currently shows
+      the login screen (only view capturable without credentials / client
+      data). A demo-data or sanitized logged-in view would lift it. Freight,
+      Concall (rebranded "Story of a Stock" landing), and all others now have
+      real product shots (2026-07-10).
 - [ ] **Confirm impact lines** — "~500 curated sailings", "3,500+ vetted
       programs", "hundreds of carriers", "daily use by the provider network"
       are my reads; correct with real numbers where available.
