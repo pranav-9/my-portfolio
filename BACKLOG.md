@@ -69,11 +69,8 @@ Claude: read this at the start of site-work sessions; add new deferred items her
       restore hover-lift on those cards (removed 2026-07-08 while cards are
       link-less).
 
-- [ ] **Richer screenshot for Care-Provider Ops Portal** — card currently shows
-      the login screen (only view capturable without credentials / client
-      data). A demo-data or sanitized logged-in view would lift it. Freight,
-      Concall (rebranded "Story of a Stock" landing), and all others now have
-      real product shots (2026-07-10).
+- [x] ~~Richer screenshot for Care-Provider Ops Portal~~ — done 2026-07-10:
+      Pranav provided a logged-in dashboard shot; brand blurred, swapped in.
 - [ ] **Confirm impact lines** — "~500 curated sailings", "3,500+ vetted
       programs", "hundreds of carriers", "daily use by the provider network"
       are my reads; correct with real numbers where available.
